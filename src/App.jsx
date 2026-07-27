@@ -499,7 +499,7 @@ function App() {
       window.addEventListener('scroll', function() {
           const scrollY = window.pageYOffset || document.documentElement.scrollTop;
           navbar.classList.toggle('scrolled', scrollY > 50);
-      });
+      }, { passive: true });
 
       const navToggle = document.querySelector('.nav-toggle');
       const navMenu = document.querySelector('.nav-menu');
@@ -524,29 +524,31 @@ function App() {
 
       function animateSkillBars() {
           skillBars.forEach(bar => {
-              const rect = bar.getBoundingClientRect();
-              if (rect.top < window.innerHeight - 50) {
-                  const width = bar.style.width;
-                  bar.style.width = '0%';
-                  setTimeout(() => { bar.style.width = width; }, 300);
-              }
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => { bar.style.width = width; }, 300);
           });
       }
 
       setTimeout(animateSkillBars, 2500);
 
-      window.addEventListener('scroll', function() {
-          if (!skillAnimated) {
-              const skillsSection = document.querySelector('.skills');
-              if (skillsSection) {
-                  const rect = skillsSection.getBoundingClientRect();
-                  if (rect.top < window.innerHeight - 100) {
+      // Sebelumnya ini scroll listener yang manggil getBoundingClientRect() tiap event
+      // scroll → forced layout tiap frame (layout thrashing), berat banget pas dipadu Lenis.
+      // Diganti IntersectionObserver: browser yang ngasih tau kapan section masuk viewport,
+      // gak perlu polling & baca layout manual sama sekali.
+      const skillsSectionEl = document.querySelector('.skills');
+      if (skillsSectionEl) {
+          const skillTriggerObserver = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting && !skillAnimated) {
                       animateSkillBars();
                       skillAnimated = true;
+                      skillTriggerObserver.disconnect();
                   }
-              }
-          }
-      });
+              });
+          }, { threshold: 0, rootMargin: '0px 0px -100px 0px' });
+          skillTriggerObserver.observe(skillsSectionEl);
+      }
 
       // ================================================================
       // 6. CONTACT FORM
@@ -862,16 +864,10 @@ function App() {
           window.addEventListener('scroll', function() {
               const scrollY = window.pageYOffset || document.documentElement.scrollTop;
               navCat.classList.toggle('visible', scrollY > 50);
-          });
+          }, { passive: true });
       }
 
-      // (Left music player widget & playlist dihapus biar ringan di HP low-end.
-      // Sekarang cuma 1 lagu "no pole" jalan lewat #bgMusic, dikontrol dari
-      // tombol musik di kanan bawah — sudah ditangani di section 11 di atas.)
 
-      // ================================================================
-      // 12. COMMENT SECTION & PARTICLE LEAVES (RE-TUNED)
-      // ================================================================
       const commentForm = document.getElementById('commentForm');
       const commentsList = document.getElementById('commentsList');
 
@@ -1538,9 +1534,7 @@ function App() {
 
       {/* AUDIO SOUNDTRACK — single track: no pole (Don Toliver) */}
       <audio id="bgMusic" src="/pole.mp3" preload="auto" />
-
-      {/* TOMBOL MUSIK (KANAN BAWAH) — hover buat buka slider volume (membesarkan),
-          keluar dari area buat nutup lagi (mengecilkan), klik tombol buat mute/unmute */}
+      
       <div className="music-controller">
         <div className="volume-popover">
           <span className="track-title" id="miniTrackTitle">no pole - Don Toliver</span>

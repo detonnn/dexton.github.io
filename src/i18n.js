@@ -12,7 +12,7 @@ export const translations = {
     navHome: 'Home',
     navAbout: 'Tentang',
     navSkills: 'Keahlian',
-    navTechstack: 'Tech Stack',
+    navTechstack: 'Tumpukan Teknologi',
     navProjects: 'Proyek',
     navContact: 'Kontak',
 
@@ -26,7 +26,7 @@ export const translations = {
 
     // About
     aboutHeader: 'Tentang Saya',
-    aboutSubtitle: 'amateur nya tangerang',
+    aboutSubtitle: 'PROFIL PROFESIONAL',
     aboutP1: 'Saya Ibnu Dexton, lulusan SMKN 5 Kota Tangerang dengan jurusan Desain Komunikasi Visual. Dengan passion dalam menciptakan desain yang bermakna, saya telah bekerja dengan berbagai klien dari berbagai industries.',
     aboutP2: 'Pendekatan saya adalah menggabungkan estetika modern dengan fungsi yang jelas, memastikan setiap proyek tidak hanya terlihat indah tetapi juga efektif dalam menyampaikan pesan.',
     statProjects: 'Proyek Selesai',
@@ -45,7 +45,7 @@ export const translations = {
     skillFrontendDesc: 'Membangun website responsif dengan HTML, CSS, dan JavaScript.',
 
     // Tech Stack
-    techstackHeader: 'Tech Stack',
+    techstackHeader: 'Tumpukan Teknologi',
     techReactDesc: 'Jadi tulang punggung hampir semua UI yang saya bangun—component-based, gampang di-reuse, dan enak dipadukan dengan state management ringan.',
     techNextDesc: 'Andalan untuk proyek yang butuh performa lebih—SSR dan routing bawaannya bikin loading halaman terasa instan tanpa konfigurasi ribet.',
     techJsDesc: 'Bahasa yang paling sering saya sentuh tiap hari—dari logika interaktif kecil sampai integrasi API, selalu jadi lem penghubung antar teknologi lain.',
@@ -68,7 +68,7 @@ export const translations = {
     proj3Title: 'Print Media Design & Packaging Workflow - Internship',
     proj3Desc: 'Pengalaman 3 bulan magang di industri percetakan dan online shop packing, menangani kesiapan berkas desain sebelum naik cetak dan standardisasi visual produk.',
     proj3Tag: 'Layout & Cetak',
-    proj4Title: 'create own brand',
+    proj4Title: 'pemilik merek',
     proj4Desc: 'Desain layout katalog dan majalah visual berskala cetak untuk mempromosikan brand fashion lokal asal Tangerang.',
     proj4Tag: 'Layout & Cetak',
     proj5Title: 'Packaging Design - Keripik Tempe Modern',
@@ -134,7 +134,7 @@ export const translations = {
 
     // About
     aboutHeader: 'About Me',
-    aboutSubtitle: "Tangerang's own amateur",
+    aboutSubtitle: "GET TO KNOW ME",
     aboutP1: "I'm Ibnu Dexton, a Visual Communication Design grad from SMKN 5 Tangerang. I'm all about creating designs that actually mean something, and I've teamed up with clients across a bunch of different industries.",
     aboutP2: "My whole approach is blending modern aesthetics with clear function, so every project doesn't just look good — it actually gets the message across.",
     statProjects: 'Projects Done',
@@ -176,7 +176,7 @@ export const translations = {
     proj3Title: 'Print Media Design & Packaging Workflow - Internship',
     proj3Desc: 'A 3-month internship in printing and online shop packing, handling design file prep before print and standardizing product visuals.',
     proj3Tag: 'Print & Layout',
-    proj4Title: 'Create Own Brand',
+    proj4Title: 'brand owner',
     proj4Desc: 'Catalog and print-scale magazine layout design to promote a local Tangerang fashion brand.',
     proj4Tag: 'Print & Layout',
     proj5Title: 'Packaging Design - Modern Tempeh Chips',
