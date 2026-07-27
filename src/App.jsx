@@ -51,6 +51,49 @@ function App() {
       swiperSound.preload = 'auto';
       swiperSound.load(); // Paksa Brave untuk langsung download file audio di awal
 
+      // Sound loop selama font loading gonta-ganti, mati pas di-hover (Web Audio API = gapless loop)
+      let fontLoopCtx = null;
+      let fontLoopBuffer = null;
+      let isFontLoopReady = false;
+      let fontLoopSource = null;
+      let fontSoundActive = true; // jadi false begitu user hover judulnya
+
+      async function preloadFontLoopSound() {
+          try {
+              fontLoopCtx = new (window.AudioContext || window.webkitAudioContext)();
+              const response = await fetch('/camera%20porto.MP3');
+              const arrayBuffer = await response.arrayBuffer();
+              fontLoopBuffer = await fontLoopCtx.decodeAudioData(arrayBuffer);
+              isFontLoopReady = true;
+              console.log('[AUDIO FONT] Buffer loop siap!');
+          } catch (err) {
+              console.warn('[AUDIO FONT] Gagal preload:', err);
+          }
+      }
+      preloadFontLoopSound();
+
+      function playFontLoopSound() {
+          if (!isFontLoopReady || !fontLoopCtx || !fontLoopBuffer || fontLoopSource) return;
+          if (fontLoopCtx.state === 'suspended') fontLoopCtx.resume();
+          const source = fontLoopCtx.createBufferSource();
+          const gain = fontLoopCtx.createGain();
+          gain.gain.value = 0.5; // Atur volume sound loop font di sini
+          source.buffer = fontLoopBuffer;
+          source.loop = true; // gapless, beda sama HTMLAudioElement.loop yg suka ada micro-gap
+          source.connect(gain);
+          gain.connect(fontLoopCtx.destination);
+          source.start(0);
+          fontLoopSource = source;
+      }
+
+      function stopFontLoopSound() {
+          if (fontLoopSource) {
+              try { fontLoopSource.stop(); } catch (err) {}
+              fontLoopSource.disconnect();
+              fontLoopSource = null;
+          }
+      }
+
       let isAudioUnlocked = false;
 
       // --- AUDIO CONTEXT UTK TOMBOL ENTER (ANTI-DELAY) ---
@@ -108,7 +151,10 @@ function App() {
                   swiperSound.currentTime = 0;
                   isAudioUnlocked = true;
                   console.log('[AUDIO] Berhasil di-unlock & siap digunakan!');
-                  
+
+                  // Mulai loop sound font-shuffle (kalau belum di-hover)
+                  if (fontSoundActive) playFontLoopSound();
+
                   // Hapus event penangkap agar hemat memori
                   window.removeEventListener('click', unlockAudioContext);
                   window.removeEventListener('mousemove', unlockAudioContext);
@@ -135,7 +181,50 @@ function App() {
 
           const spans = loaderTitle.querySelectorAll('span');
 
+          // --- FONT GONTA-GANTI RANDOM SAAT LOADING ---
+          // Ganti daftar font di sini sesuai yang lo mau
+          const LOADER_FONTS = [
+              "'Cormorant Garamond', serif",
+              "'Playfair Display', serif",
+              "'Abril Fatface', serif",
+              "'Bungee', cursive",
+              "'Press Start 2P', monospace",
+              "'VT323', monospace",
+              "'Orbitron', sans-serif",
+              "'Pacifico', cursive",
+              "'Great Vibes', cursive",
+              "'Caveat', cursive",
+              "'UnifrakturMaguntia', cursive",
+              "'Nosifer', cursive",
+              "'Creepster', cursive",
+              "'Monoton', cursive",
+              "'Permanent Marker', cursive",
+              "'Bangers', cursive",
+              "'Lobster', cursive",
+              "'Luckiest Guy', cursive",
+              "'Amatic SC', cursive",
+              "'Rakkas', cursive",       // vibe Arab
+              "'Lalezar', cursive",      // vibe Arab
+              "'Jomhuria', cursive",     // vibe Arab
+              "'East Sea Dokdo', cursive", // vibe Korea
+              "'Poor Story', cursive",   // vibe Korea
+              "'Do Hyeon', sans-serif",  // vibe Korea
+              "'Ma Shan Zheng', cursive", // vibe China
+              "'Long Cang', cursive",    // vibe China
+              "'Chonburi', cursive",     // vibe Thailand
+              "'Charmonman', cursive",   // vibe Thailand
+              "'Yuji Syuku', serif",     // vibe Jepang
+          ];
+          const fontShuffleInterval = setInterval(() => {
+              loaderTitle.style.fontFamily = LOADER_FONTS[(Math.random() * LOADER_FONTS.length) | 0];
+          }, 180);
+
           loaderTitle.addEventListener('mouseenter', () => {
+              // Stop random font: otomatis freeze di font terakhir yang kelihatan
+              clearInterval(fontShuffleInterval);
+              fontSoundActive = false;
+              stopFontLoopSound();
+
               // Munculkan tombol Enter dengan animasi fade-in
               if (enterBtn) enterBtn.classList.add('show-enter');
 
@@ -428,6 +517,16 @@ function App() {
 
               applyState(); // refresh label Matiin/Nyalain sesuai bahasa aktif
               renderLangList();
+
+              // FIX: reposisi nav-indicator karena lebar teks navbar beda tiap bahasa
+              const activeNavLink = document.querySelector('.nav-menu a.active');
+              const navIndicatorEl = document.querySelector('.nav-indicator');
+              if (activeNavLink && navIndicatorEl) {
+                  navIndicatorEl.style.width = activeNavLink.offsetWidth + 'px';
+                  navIndicatorEl.style.height = activeNavLink.offsetHeight + 'px';
+                  navIndicatorEl.style.left = activeNavLink.offsetLeft + 'px';
+                  navIndicatorEl.style.top = activeNavLink.offsetTop + 'px';
+              }
           }
 
           function renderLangList() {
@@ -755,7 +854,7 @@ function App() {
 
           const HOVER_SELECTORS = [
               '.skill-card', '.tech-card', '.project-card', '.hero-buttons .btn',
-              '.hero-social a', '.profile-wrapper'
+              '.hero-social a', '.profile-wrapper', '#enterBtn'
           ].join(', ');
 
           document.querySelectorAll(HOVER_SELECTORS).forEach(el => {

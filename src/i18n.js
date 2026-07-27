@@ -18,7 +18,7 @@ export const translations = {
 
     // Hero
     heroGreeting: 'Halo, Saya',
-    heroSubtitle: 'Desainer Komunikasi Visual | Lulusan SMKN 5 Kota Tangerang',
+    heroSubtitle: 'Desainer Komunikasi Visual',
     heroDesc: 'Menciptakan karya visual yang impactful dan estetis untuk berbagai client ternama.',
     heroBtnProjects: 'Lihat Proyek',
     heroBtnContact: 'Hubungi Saya',
@@ -58,7 +58,7 @@ export const translations = {
     techDartDesc: 'Bahasa di balik setiap widget Flutter yang saya susun—null safety-nya bikin aplikasi mobile lebih jarang crash saat runtime.',
 
     // Projects
-    projectsHeader: 'Proyek Archive',
+    projectsHeader: 'Arsip Proyek',
     proj1Title: 'brand identity server - Garuda Private Server',
     proj1Desc: 'Produksi dan editing video kreatif menggunakan CapCut PC, pembuatan poster, banner, serta optimasi visual thumbnail YouTube untuk meningkatkan CTR klien.',
     proj1Tag: 'Branding',
@@ -126,7 +126,7 @@ export const translations = {
 
     // Hero
     heroGreeting: "Yo, it's",
-    heroSubtitle: 'Visual Communication Designer | SMKN 5 Tangerang Grad',
+    heroSubtitle: 'Visual Communication Designer',
     heroDesc: 'Cooking up visual work that hits different for legit, big-name clients.',
     heroBtnProjects: 'Check My Work',
     heroBtnContact: 'Hit Me Up',

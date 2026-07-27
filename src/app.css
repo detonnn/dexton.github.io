@@ -914,6 +914,9 @@ body::before {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 24px;
+    /* perspective di parent bikin efek 3D kerasa konsisten dari sudut pandang
+       yang sama buat semua kartu, gak perlu JS mousemove sama sekali */
+    perspective: 1200px;
 }
 
 .tech-card {
@@ -924,17 +927,19 @@ body::before {
     padding: 22px 20px 24px;
     border-radius: 20px;
     text-align: center;
-    transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+    /* transform-style + will-change transform doang: GPU-composited,
+       gak nyentuh layout/paint jadi ringan di device low-end */
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
     box-shadow: var(--shadow);
     position: relative;
     overflow: visible;
     z-index: 1;
 }
 
-/* Saat salah satu kartu di-hover, kartu lain sedikit mengecil & meredup
-   supaya fokus jatuh ke kartu yang aktif tanpa berlebihan */
+/* Saat salah satu kartu di-hover, kartu lain cuma meredup (tanpa ikut
+   mengecil/scale) supaya fokus jatuh ke kartu 3D yang aktif */
 .tech-grid:hover .tech-card.tech-card {
-    transform: scale(0.94);
     opacity: 0.55;
 }
 
@@ -953,15 +958,37 @@ body::before {
     pointer-events: none;
 }
 
-.tech-card.tech-card:hover,
-.tech-grid:hover .tech-card.tech-card {
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+/* PENTING: begitu kartu selesai reveal (dapet class .in-view dari
+   IntersectionObserver), transition-nya di-"lepas" dari delay stagger
+   punya scroll-reveal (--reveal-delay bisa sampe 0.4s). Kalau ini gak
+   di-override, tiap kali mouse ninggalin kartu, animasi baliknya ikut
+   nunggu delay stagger dulu — itu penyebab bug "kadang diem kadang
+   jalan" pas hover kelogo/tengah kartu. Specificity .tech-card.in-view
+   (0,2,0) otomatis menang atas .tech-card polos (0,1,0) punya reveal,
+   jadi urutan file gak masalah. */
+.tech-card.in-view {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease,
+                background 0.4s ease;
+    transition-delay: 0s;
 }
 
+.tech-card.tech-card:hover,
+.tech-grid:hover .tech-card.tech-card {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+    transition-delay: 0s;
+}
+
+/* Efek 3D pop: kartu "terangkat" ke arah viewer (translateZ) sambil
+   miring dikit (rotateX/rotateY) — murni transform, gak ada JS mousemove
+   per-kartu jadi tetap hemat di device low-end */
 .tech-card.tech-card:hover {
-    transform: scale(1.08);
+    will-change: transform;
+    transform: translateY(-10px) translateZ(50px) rotateX(8deg) rotateY(-4deg);
     border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 24px 48px rgba(255, 255, 255, 0.18);
+    box-shadow: 0 30px 55px rgba(0, 0, 0, 0.45), 0 10px 24px rgba(255, 255, 255, 0.15);
     background: rgba(255, 255, 255, 0.06);
     z-index: 5;
 }
@@ -1010,7 +1037,7 @@ body::before {
     justify-content: center;
     height: 48px;
     margin-bottom: 16px;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tech-icon img {
