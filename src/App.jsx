@@ -1150,6 +1150,227 @@ function App() {
           animateParticles();
       }
 
+      // ================================================================
+      // CHATBOT WIDGET (bottom-left virtual assistant)
+      // ================================================================
+      (function () {
+          const widget = document.getElementById('chatbotWidget');
+          const toggleBtn = document.getElementById('chatbotToggleBtn');
+          const closeBtn = document.getElementById('chatbotCloseBtn');
+          const body = document.getElementById('chatbotBody');
+          const quickWrap = document.getElementById('chatbotQuickReplies');
+          const input = document.getElementById('chatbotInput');
+          const sendBtn = document.getElementById('chatbotSendBtn');
+          const menuWrap = document.getElementById('chatbotMenuWrap');
+          const menuBtn = document.getElementById('chatbotMenuBtn');
+          const panel = document.getElementById('chatbotPanel');
+          const scrim = document.getElementById('chatbotScrim');
+          const newChatBtn = document.getElementById('chatbotNewChatBtn');
+          const endChatBtn = document.getElementById('chatbotEndChatBtn');
+          const historyBtn = document.getElementById('chatbotHistoryBtn');
+
+          if (!widget || !toggleBtn) return;
+
+          function lang() {
+              return localStorage.getItem('site_lang') === 'en' ? 'en' : 'id';
+          }
+          function t(key) {
+              return (translations[lang()] && translations[lang()][key]) || translations.id[key] || '';
+          }
+
+          function addMessage(text, sender, i18nKey) {
+              const msg = document.createElement('div');
+              msg.className = 'chatbot-msg ' + sender;
+              if (i18nKey) msg.setAttribute('data-i18n', i18nKey);
+              body.appendChild(msg);
+
+              if (sender === 'bot') {
+                  let i = 0;
+                  const speed = 14;
+                  (function typeChar() {
+                      msg.textContent = text.slice(0, i);
+                      body.scrollTop = body.scrollHeight;
+                      i++;
+                      if (i <= text.length) setTimeout(typeChar, speed);
+                  })();
+              } else {
+                  msg.textContent = text;
+              }
+              body.scrollTop = body.scrollHeight;
+          }
+
+          function showTyping(callback) {
+              const typing = document.createElement('div');
+              typing.className = 'chatbot-typing';
+              typing.innerHTML = '<span></span><span></span><span></span>';
+              body.appendChild(typing);
+              body.scrollTop = body.scrollHeight;
+              setTimeout(() => {
+                  typing.remove();
+                  callback();
+              }, 650 + Math.random() * 450);
+          }
+
+          // Riwayat chat sederhana, disimpan di localStorage
+          function loadHistory() {
+              try { return JSON.parse(localStorage.getItem('chatbot_history') || '[]'); }
+              catch (e) { return []; }
+          }
+          function saveHistoryEntry(text) {
+              const hist = loadHistory();
+              hist.unshift({ text, time: Date.now() });
+              localStorage.setItem('chatbot_history', JSON.stringify(hist.slice(0, 8)));
+          }
+
+          const QUICK_KEYS = ['chatbotQ1', 'chatbotQ2', 'chatbotQ3', 'chatbotQ4'];
+          const ANSWER_MAP = {
+              chatbotQ1: 'chatbotAns1',
+              chatbotQ2: 'chatbotAns2',
+              chatbotQ3: 'chatbotAns3',
+              chatbotQ4: 'chatbotAns4',
+          };
+
+          function renderQuickReplies() {
+              quickWrap.innerHTML = '';
+              QUICK_KEYS.forEach(key => {
+                  const btn = document.createElement('button');
+                  btn.className = 'chatbot-quick-btn';
+                  btn.setAttribute('data-i18n', key);
+                  btn.textContent = t(key);
+                  btn.addEventListener('click', () => handleUserInput(t(key), ANSWER_MAP[key]));
+                  quickWrap.appendChild(btn);
+              });
+          }
+
+          // Deteksi kata kunci buat balesan free-text (ID & EN sekaligus)
+          const KEYWORD_MAP = [
+              { keys: ['halo', 'hai', ' hi ', 'hello', 'pagi', 'siang', 'malam', 'hey'], answer: 'chatbotAnsGreeting' },
+              { keys: ['makasih', 'terima kasih', 'thanks', 'thank you'], answer: 'chatbotAnsThanks' },
+              { keys: ['kamu siapa', 'siapa kamu', 'who are you', 'kamu bot', 'are you a bot'], answer: 'chatbotAnsBotId' },
+              { keys: ['dimana', 'lokasi', 'alamat', 'where', 'location', 'tangerang'], answer: 'chatbotAnsLocation' },
+              { keys: ['sekolah', 'smk', 'pendidikan', 'lulusan', 'education', 'school', 'kuliah'], answer: 'chatbotAnsEducation' },
+              { keys: ['pengalaman', 'berapa tahun', 'experience', 'years'], answer: 'chatbotAnsExperience' },
+              { keys: ['react', 'next', 'javascript', 'tailwind', 'php', 'laravel', 'mysql', 'firebase', 'flutter', 'dart', 'tech stack', 'teknologi', 'framework'], answer: 'chatbotAnsTech' },
+              { keys: ['harga', 'biaya', 'price', 'order', 'jasa', 'sewa', 'hire'], answer: 'chatbotAnsOrder' },
+              { keys: ['tentang', 'siapa', 'about', 'who', 'profil'], answer: 'chatbotAns1' },
+              { keys: ['skill', 'keahlian', 'kemampuan', 'expertise', 'bisa apa'], answer: 'chatbotAns2' },
+              { keys: ['proyek', 'project', 'karya', 'portofolio', 'portfolio', 'work'], answer: 'chatbotAns3' },
+              { keys: ['kontak', 'contact', 'hubungi', 'email', 'whatsapp', ' wa '], answer: 'chatbotAns4' },
+              { keys: ['makan', 'hobi', 'umur', 'age', 'food', 'favorite', 'favorit', 'lahir', 'ulang tahun'], answer: 'chatbotAnsUnknownPersonal' },
+          ];
+
+          function detectAnswer(text) {
+              const lower = ' ' + text.toLowerCase() + ' ';
+              const found = KEYWORD_MAP.find(entry => entry.keys.some(k => lower.includes(k)));
+              return found ? found.answer : null;
+          }
+
+          // Panggil backend AI HANYA kalau keyword lokal gak nemu jawaban (hemat token/biaya)
+          async function askAI(userText) {
+              try {
+                  const res = await fetch('/api/chat', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ message: userText }),
+                  });
+                  const data = await res.json();
+                  return data.reply || t('chatbotFallback');
+              } catch (err) {
+                  console.warn('[CHATBOT AI] Gagal manggil /api/chat:', err);
+                  return t('chatbotFallback');
+              }
+          }
+
+          function handleUserInput(displayText, forcedAnswerKey) {
+              if (!displayText || !displayText.trim()) return;
+              addMessage(displayText, 'user');
+              saveHistoryEntry(displayText);
+              if (input) input.value = '';
+
+              const answerKey = forcedAnswerKey || detectAnswer(displayText);
+
+              if (answerKey) {
+                  // Ketemu di keyword map lokal -> gratis, gak kena API sama sekali
+                  showTyping(() => addMessage(t(answerKey), 'bot'));
+              } else {
+                  // Gak ketemu lokal -> baru lempar ke AI backend
+                  showTyping(async () => {
+                      const aiReply = await askAI(displayText);
+                      addMessage(aiReply, 'bot');
+                  });
+              }
+          }
+
+          let chatInitialized = false;
+          function startFreshChat() {
+              body.innerHTML = '';
+              chatInitialized = true;
+              addMessage(t('chatbotGreeting'), 'bot', 'chatbotGreeting');
+              renderQuickReplies();
+          }
+
+          function openChat() {
+              widget.classList.add('open');
+              if (!chatInitialized) startFreshChat();
+              setTimeout(() => input && input.focus(), 350);
+          }
+
+          function closeChat() {
+              widget.classList.remove('open');
+              closeMenu();
+          }
+
+          function closeMenu() {
+              if (menuWrap) menuWrap.classList.remove('open');
+              if (panel) panel.classList.remove('menu-open');
+          }
+
+          toggleBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              widget.classList.contains('open') ? closeChat() : openChat();
+          });
+          if (closeBtn) closeBtn.addEventListener('click', closeChat);
+
+          if (menuBtn) {
+              menuBtn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  const willOpen = !menuWrap.classList.contains('open');
+                  menuWrap.classList.toggle('open', willOpen);
+                  if (panel) panel.classList.toggle('menu-open', willOpen);
+              });
+          }
+          if (scrim) scrim.addEventListener('click', closeMenu);
+          if (newChatBtn) newChatBtn.addEventListener('click', () => { closeMenu(); startFreshChat(); });
+          if (endChatBtn) endChatBtn.addEventListener('click', () => { chatInitialized = false; closeChat(); });
+          if (historyBtn) {
+              historyBtn.addEventListener('click', () => {
+                  closeMenu();
+                  const hist = loadHistory();
+                  if (!hist.length) {
+                      addMessage(t('chatbotNoHistory'), 'bot');
+                      return;
+                  }
+                  const wrap = document.createElement('div');
+                  wrap.className = 'chatbot-msg bot chatbot-history-list';
+                  wrap.innerHTML = hist.map(h => `<div class="chatbot-history-item">${h.text}</div>`).join('');
+                  body.appendChild(wrap);
+                  body.scrollTop = body.scrollHeight;
+              });
+          }
+
+          if (sendBtn) sendBtn.addEventListener('click', () => handleUserInput(input.value));
+          if (input) {
+              input.addEventListener('keydown', (e) => {
+                  if (e.key === 'Enter') handleUserInput(input.value);
+              });
+          }
+
+          document.addEventListener('click', (e) => {
+              if (menuWrap && !menuWrap.contains(e.target)) closeMenu();
+              if (widget.classList.contains('open') && !widget.contains(e.target)) closeChat();
+          });
+      })();
+
       console.log('[PORTAL] Semua modul selesai dimuat!');
 
       window.startMusicAfterEnter = function() {
@@ -1196,6 +1417,66 @@ function App() {
         </div>
       </div>
       
+      {/* Chatbot Widget (bottom-left) */}
+      <div className="chatbot-widget" id="chatbotWidget">
+        <div className="chatbot-panel" id="chatbotPanel">
+          <div className="chatbot-header">
+            <div className="chatbot-avatar"><i className="fas fa-robot"></i></div>
+            <div className="chatbot-header-info">
+              <strong data-i18n="chatbotName">Ibnu's Virtual Assistant</strong>
+              <span className="chatbot-status">
+                <span className="chatbot-status-dot"></span>
+                <span data-i18n="chatbotStatus">Online</span>
+              </span>
+            </div>
+            <div className="chatbot-menu-wrap" id="chatbotMenuWrap">
+              <button className="chatbot-menu-btn" id="chatbotMenuBtn" data-i18n-aria="chatbotMenuAria" aria-label="Menu Chat">
+                <i className="fas fa-ellipsis"></i>
+              </button>
+              <div className="chatbot-menu-dropdown" id="chatbotMenuDropdown">
+                <button className="chatbot-menu-item" id="chatbotNewChatBtn">
+                  <i className="fas fa-pen"></i> <span data-i18n="chatbotMenuNew">Mulai Chat Baru</span>
+                </button>
+                <button className="chatbot-menu-item" id="chatbotEndChatBtn">
+                  <i className="fas fa-xmark"></i> <span data-i18n="chatbotMenuEnd">Akhiri Chat</span>
+                </button>
+                <button className="chatbot-menu-item" id="chatbotHistoryBtn">
+                  <i className="fas fa-clock-rotate-left"></i> <span data-i18n="chatbotMenuHistory">Lihat Riwayat Chat</span>
+                </button>
+              </div>
+            </div>
+            <button className="chatbot-close" id="chatbotCloseBtn" aria-label="Close">
+              <i className="fas fa-xmark"></i>
+            </button>
+          </div>
+
+          <div className="chatbot-scrim" id="chatbotScrim"></div>
+
+          <div className="chatbot-body" id="chatbotBody" data-lenis-prevent></div>
+
+          <div className="chatbot-quick-replies" id="chatbotQuickReplies"></div>
+
+          <div className="chatbot-input-row">
+            <input
+              type="text"
+              className="chatbot-input"
+              id="chatbotInput"
+              data-i18n-placeholder="chatbotPlaceholder"
+              placeholder="Tulis pesan..."
+              autoComplete="off"
+            />
+            <button className="chatbot-send-btn" id="chatbotSendBtn" aria-label="Send">
+              <i className="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <button className="chatbot-toggle-btn" id="chatbotToggleBtn" data-i18n-aria="chatbotAria" aria-label="Buka Asisten Virtual">
+          <i className="fas fa-comment-dots chatbot-icon-chat"></i>
+          <i className="fas fa-xmark chatbot-icon-close"></i>
+        </button>
+      </div>
+
       <div className="bg-blobs">
         <div className="blob blob-1"></div>
         <div className="blob blob-2"></div>

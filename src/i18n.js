@@ -110,6 +110,36 @@ export const translations = {
 
     // Music player
     musicToggleTitle: 'Mute/Unmute Musik',
+
+    // Chatbot
+    chatbotAria: 'Buka Asisten Virtual',
+    chatbotName: "Ibnu's Virtual Assistant",
+    chatbotStatus: 'Online',
+    chatbotGreeting: 'Halo! Tanyakan sesuatu tentang Ibnu Dexton',
+    chatbotPlaceholder: 'Tulis pesan...',
+    chatbotQ1: 'Tentang Ibnu?',
+    chatbotQ2: 'Keahlian & Skill?',
+    chatbotQ3: 'Proyek Terbaru?',
+    chatbotQ4: 'Cara Kontak?',
+    chatbotAns1: 'Ibnu Dexton adalah lulusan SMKN 5 Kota Tangerang jurusan Desain Komunikasi Visual, fokus di UI/UX, graphic design, motion design, dan frontend dev. Udah kerja bareng berbagai klien dari macam-macam industri!',
+    chatbotAns2: 'Keahlian utamanya: UI/UX Design, Graphic Design, Motion Design, dan Frontend Dev (HTML, CSS, JS, React). Buat tech stack lengkap bisa cek section "Tumpukan Teknologi" ya!',
+    chatbotAns3: 'Beberapa proyeknya: Brand Identity Garuda Private Server, Custom Vector Logo, Packaging Keripik Tempe, sampai Social Media Kit buat brand sepatu lokal. Scroll ke section "Arsip Proyek" buat lihat semua!',
+    chatbotAns4: 'Gampang! Scroll ke section "Hubungi Saya" di bawah, isi form kontaknya, atau langsung klik "Hubungi Saya" di hero section paling atas. Ibnu berbasis di Tangerang, Indonesia',
+    chatbotFallback: 'Hmm, aku belum ngerti pertanyaan itu Coba pencet salah satu tombol cepat di bawah, atau tanya soal profil, skill, proyek, sama kontak ya!',
+    chatbotMenuAria: 'Menu Chat',
+    chatbotMenuNew: 'Mulai Chat Baru',
+    chatbotMenuEnd: 'Akhiri Chat',
+    chatbotMenuHistory: 'Lihat Riwayat Chat',
+    chatbotNoHistory: 'Belum ada riwayat chat sebelumnya.',
+    chatbotAnsGreeting: 'Halo juga! Ada yang mau ditanyain soal Ibnu Dexton? Bisa soal profil, skill, tech stack, proyek, pendidikan, lokasi, atau cara kontak.',
+    chatbotAnsThanks: 'Sama-sama! Ada lagi yang mau ditanyain?',
+    chatbotAnsBotId: 'Aku asisten virtual di portfolio Ibnu Dexton, siap bantu jawab pertanyaan seputar dia dan karyanya!',
+    chatbotAnsLocation: 'Ibnu berbasis di Tangerang, Indonesia',
+    chatbotAnsEducation: 'Ibnu lulusan SMKN 5 Kota Tangerang, jurusan Desain Komunikasi Visual.',
+    chatbotAnsExperience: 'Udah beberapa tahun terjun di dunia desain & frontend dev, kerja bareng berbagai klien dari macam-macam industri. Detail angkanya bisa dicek di section "Tentang Saya" ya!',
+    chatbotAnsTech: 'Tech stack Ibnu: React, Next.js, JavaScript, Tailwind CSS buat frontend; PHP, Laravel, MySQL, Firebase buat backend; Flutter & Dart buat mobile. Detailnya ada di section "Tumpukan Teknologi"!',
+    chatbotAnsOrder: 'Buat order jasa atau kerja sama, langsung aja isi form di section "Hubungi Saya" atau klik "Hubungi Saya" di hero section ya!',
+    chatbotAnsUnknownPersonal: 'Wah, info spesifik itu belum ada di data yang aku punya Coba tanya langsung ke Ibnu lewat form kontak ya!',
   },
 
   en: {
@@ -218,6 +248,36 @@ export const translations = {
 
     // Music player
     musicToggleTitle: 'Mute/Unmute Music',
+
+    // Chatbot
+    chatbotAria: 'Open Virtual Assistant',
+    chatbotName: "Ibnu's Virtual Assistant",
+    chatbotStatus: 'Online',
+    chatbotGreeting: "Yo! Ask me anything about Ibnu Dexton",
+    chatbotPlaceholder: 'Type a message...',
+    chatbotQ1: 'About Ibnu?',
+    chatbotQ2: 'Skills & Expertise?',
+    chatbotQ3: 'Latest Projects?',
+    chatbotQ4: 'How to Contact?',
+    chatbotAns1: "Ibnu Dexton is a Visual Communication Design grad from SMKN 5 Tangerang, focused on UI/UX, graphic design, motion design, and frontend dev. He's teamed up with clients across a bunch of industries!",
+    chatbotAns2: 'His main skills: UI/UX Design, Graphic Design, Motion Design, and Frontend Dev (HTML, CSS, JS, React). Check the "Tech Stack" section for the full stack!',
+    chatbotAns3: 'Some of his work: Garuda Private Server Brand Identity, Custom Vector Logo, Modern Tempeh Chips Packaging, and a Social Media Kit for a local sneaker brand. Scroll to "Project Archive" to see them all!',
+    chatbotAns4: "Easy! Scroll down to the \"Get In Touch\" section and fill out the form, or just hit \"Hit Me Up\" in the hero section up top. Ibnu's based in Tangerang, Indonesia",
+    chatbotFallback: "Hmm, I didn't quite get that Try one of the quick buttons below, or ask about his profile, skills, projects, or contact info!",
+    chatbotMenuAria: 'Chat Menu',
+    chatbotMenuNew: 'Start a New Chat',
+    chatbotMenuEnd: 'End Chat',
+    chatbotMenuHistory: 'View Recent Chats',
+    chatbotNoHistory: 'No chat history yet.',
+    chatbotAnsGreeting: "Hey there! Got questions about Ibnu Dexton? Ask about his profile, skills, tech stack, projects, education, location, or how to reach him.",
+    chatbotAnsThanks: "You're welcome! Anything else you wanna know?",
+    chatbotAnsBotId: "I'm the virtual assistant on Ibnu Dexton's portfolio, here to answer questions about him and his work!",
+    chatbotAnsLocation: "Ibnu's based in Tangerang, Indonesia ",
+    chatbotAnsEducation: 'Ibnu graduated from SMKN 5 Tangerang, majoring in Visual Communication Design.',
+    chatbotAnsExperience: "He's spent years in design & frontend dev, teaming up with clients across a bunch of industries. Check the \"About Me\" section for the numbers!",
+    chatbotAnsTech: "Ibnu's stack: React, Next.js, JavaScript, Tailwind CSS for frontend; PHP, Laravel, MySQL, Firebase for backend; Flutter & Dart for mobile. Full details in the \"Tech Stack\" section!",
+    chatbotAnsOrder: 'For hiring or collabs, just fill out the form in the "Get In Touch" section or hit "Hit Me Up" up top!',
+    chatbotAnsUnknownPersonal: "Hmm, that specific info isn't in what I know Try asking Ibnu directly through the contact form!",
   },
 };
 
