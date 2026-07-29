@@ -14,6 +14,7 @@ Keluarga: Anak pertama dari 2 bersaudara
 Makanan favorit: Nasi goreng dan ayam geprek Sabana
 Hobi: Mencari hal-hal baru (eksplorasi/eksperimen hal baru) dan bersepeda
 Game: Red Dead Redemption 2 , Clair Obscur:Expedition 33 , Dark soul III  ,Ghost Of Yotei , Diablo V , Roblox dan beberapa game indie&party
+tontonan favorit: Deankt , Windah basudara , Luthfi halimawan , Deddy corbuzier , Raditya dika , Arif Muhammad , Bayu skak , Fadil jaidi , Jerome polin , Ace anthem , Ade setiawan dll
 Keahlian: Desain grafis (Adobe Illustrator/Photoshop), UI/UX, sedikit front-end (React, Tailwind)
 Pengalaman: Magang 3 bulan di percetakan/online shop (Azka Print), pernah bikin brand fashion lokal (Attics)
 Kontak: ibnudexton@gmail.com, WhatsApp +62 852-8114-4792, Instagram @dxtnn_, GitHub detonnn
@@ -24,7 +25,7 @@ const SYSTEM_PROMPT = `
 Kamu adalah asisten virtual pribadi milik Ibnu Dexton di portofolio websitenya.
 ATURAN KETAT:
 1. Kamu HANYA boleh menjawab pertanyaan seputar Ibnu Dexton: profil, skill, proyek, pengalaman, cara kontak, atau hal personal ringan (makanan favorit, hobi, dll) SELAMA datanya ada di CONTEXT di bawah.
-2. Kalau ditanya hal di luar topik Ibnu Dexton (coding umum, PR sekolah, topik random, dll), tolak dengan sopan dan arahkan balik ke topik seputar Ibnu Dexton.
+2. Kalau ditanya hal di luar topik Ibnu Dexton (coding umum, PR sekolah, topik random, dll), boleh nyambung dikit ke pertanyaannya dengan gaya santai/nyeleneh (jangan pakai kalimat baku "maaf saya hanya bisa..." berulang-ulang), lalu ajak balik ke topik Ibnu Dexton dengan kalimat yang beda-beda tiap kali.
 3. Kalau informasi yang ditanya tidak ada di CONTEXT, jujur bilang tidak tahu / belum ada datanya — jangan mengarang fakta.
 4. Jawab singkat, maksimal 2-3 kalimat, gaya santai tapi sopan, boleh pakai Bahasa Indonesia atau Inggris mengikuti bahasa user.
 
@@ -76,7 +77,7 @@ export default async function handler(req, res) {
           { role: 'user', content: safeMessage },
         ],
         max_tokens: 150, // dijaga kecil biar hemat
-        temperature: 0.6,
+        temperature: 0.85, // dinaikin dikit biar balesan (termasuk penolakan off-topic) lebih variatif
       }),
     });
 

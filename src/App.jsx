@@ -341,11 +341,6 @@ function App() {
               // Mainkan sound enter.MP3 begitu tombol Enter ditekan
               new Audio('/enter.MP3').play().catch(err => console.log('[AUDIO] Enter sound error:', err));
 
-              // 2. KUNCI UTAMA: Putar musik utama SEGERA tanpa delay saat klik enter
-              if (typeof startMusicAfterEnter === 'function') {
-                  startMusicAfterEnter();
-              }
-
               // 3. Panggil fungsi bawaan template kamu untuk nutup loader
               if (typeof hideLoader === 'function') {
                   hideLoader();
@@ -880,59 +875,6 @@ function App() {
           });
       }
 
-      // ================================================================
-      // 11. MUSIC PLAYER (KANAN & KIRI) + PLAYLIST
-      // ================================================================
-      const bgMusic = document.getElementById('bgMusic');
-      const musicToggle = document.getElementById('musicToggle');
-      const volumeSlider = document.getElementById('volumeSlider');
-
-      if (bgMusic && musicToggle && volumeSlider) {
-          bgMusic.volume = volumeSlider.value;
-          
-          let musicUnlocked = false;
-          const startMusicOnInteraction = () => {
-              if (!siteEntered || musicUnlocked || !bgMusic) return; 
-              bgMusic.play().then(() => {
-                  musicUnlocked = true;
-                  unlockEvents.forEach(evt => document.removeEventListener(evt, startMusicOnInteraction));
-              }).catch(() => {});
-          };
-          const unlockEvents = ['click', 'mousemove', 'scroll', 'touchstart', 'keydown'];
-          unlockEvents.forEach(evt => {
-              document.addEventListener(evt, startMusicOnInteraction, { passive: true });
-          });
-
-          musicToggle.addEventListener('click', (e) => {
-              e.stopPropagation();
-              if (bgMusic.muted) {
-                  bgMusic.muted = false;
-                  musicToggle.classList.remove('muted');
-                  musicToggle.innerHTML = '<i class="fas fa-music"></i>';
-                  volumeSlider.value = bgMusic.volume;
-              } else {
-                  bgMusic.muted = true;
-                  musicToggle.classList.add('muted');
-                  musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                  volumeSlider.value = 0;
-              }
-          });
-
-          volumeSlider.addEventListener('input', (e) => {
-              const val = parseFloat(e.target.value);
-              bgMusic.volume = val;
-              if (val === 0) {
-                  bgMusic.muted = true;
-                  musicToggle.classList.add('muted');
-                  musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-              } else {
-                  bgMusic.muted = false;
-                  musicToggle.classList.remove('muted');
-                  musicToggle.innerHTML = '<i class="fas fa-music"></i>';
-              }
-          });
-      }
-
       // NavCat walking animation
       const navCat = document.getElementById('navCat');
       const navLogo = document.querySelector('.nav-logo');
@@ -1420,19 +1362,6 @@ function App() {
       })();
 
       console.log('[PORTAL] Semua modul selesai dimuat!');
-
-      window.startMusicAfterEnter = function() {
-          const bgMusic = document.getElementById('bgMusic'); 
-          if (bgMusic) {
-              console.log('[AUDIO] Memutar musik utama secara instan setelah Enter...');
-              bgMusic.muted = false; 
-              bgMusic.play()
-                  .then(() => console.log('[AUDIO] Musik utama berhasil berputar!'))
-                  .catch(error => console.log('[AUDIO] Playback terblokir:', error));
-          } else {
-              console.warn('[AUDIO] Elemen #bgMusic tidak ditemukan!');
-          }
-      };
 
     })();
   }, []);
@@ -1959,19 +1888,6 @@ function App() {
           <p data-i18n="footerText">&copy; 2026 Ibnu Dexton. All rights reserved.</p>
         </div>
       </footer>
-
-      {/* AUDIO SOUNDTRACK — single track: no pole (Don Toliver) */}
-      <audio id="bgMusic" src="/pole.mp3" preload="auto" />
-      
-      <div className="music-controller">
-        <div className="volume-popover">
-          <span className="track-title" id="miniTrackTitle">no pole - Don Toliver</span>
-          <input type="range" id="volumeSlider" min="0" max="1" step="0.05" defaultValue="0.4" />
-        </div>
-        <button id="musicToggle" className="music-btn" data-i18n-title="musicToggleTitle" title="Mute/Unmute Musik">
-          <i className="fas fa-music"></i>
-        </button>
-      </div>
 
       <audio id="hoverSound" src="/hov.MP3" preload="auto" />
     </>

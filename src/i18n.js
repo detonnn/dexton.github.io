@@ -108,9 +108,6 @@ export const translations = {
     langIdLabel: 'Indonesia (Asli)',
     langEnLabel: 'English (Gaul)',
 
-    // Music player
-    musicToggleTitle: 'Mute/Unmute Musik',
-
     // Chatbot
     chatbotAria: 'Buka Asisten Virtual',
     chatbotName: "Ibnu's Virtual Assistant",
@@ -124,7 +121,7 @@ export const translations = {
     chatbotAns1: 'Ibnu Dexton adalah lulusan SMKN 5 Kota Tangerang jurusan Desain Komunikasi Visual, fokus di UI/UX, graphic design, motion design, dan frontend dev. Udah kerja bareng berbagai klien dari macam-macam industri!',
     chatbotAns2: 'Keahlian utamanya: UI/UX Design, Graphic Design, Motion Design, dan Frontend Dev (HTML, CSS, JS, React). Buat tech stack lengkap bisa cek section "Tumpukan Teknologi" ya!',
     chatbotAns3: 'Beberapa proyeknya: Brand Identity Garuda Private Server, Custom Vector Logo, Packaging Keripik Tempe, sampai Social Media Kit buat brand sepatu lokal. Scroll ke section "Arsip Proyek" buat lihat semua!',
-    chatbotAns4: 'Gampang! Scroll ke section "Hubungi Saya" di bawah, isi form kontaknya, atau klik link ini',
+    chatbotAns4: 'Gampang! Scroll ke section "Hubungi Saya" di bawah, isi form kontaknya, atau langsung klik "Hubungi Saya" di section paling atas atau klik link ini',
     chatbotFallback: 'Hmm, aku belum ngerti pertanyaan itu Coba pencet salah satu tombol cepat di bawah, atau tanya soal profil, skill, proyek, sama kontak ya!',
     chatbotMenuAria: 'Menu Chat',
     chatbotMenuNew: 'Mulai Chat Baru',
@@ -245,9 +242,6 @@ export const translations = {
     langSectionTitle: 'Language',
     langIdLabel: 'Indonesian (Original)',
     langEnLabel: 'English (Slang)',
-
-    // Music player
-    musicToggleTitle: 'Mute/Unmute Music',
 
     // Chatbot
     chatbotAria: 'Open Virtual Assistant',
