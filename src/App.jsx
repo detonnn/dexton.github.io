@@ -1178,11 +1178,51 @@ function App() {
               return (translations[lang()] && translations[lang()][key]) || translations.id[key] || '';
           }
 
-          function addMessage(text, sender, i18nKey) {
+          // Link kontak asli — dipake buat nampilin tombol langsung di chat
+          const CONTACT_LINKS = {
+              instagram: { label: 'Buka Instagram', url: 'https://www.instagram.com/dxtnn_', iconClass: 'fab fa-instagram' },
+              tiktok: { label: 'Buka TikTok', url: 'https://www.tiktok.com/@risemss', iconClass: 'fab fa-tiktok' },
+              whatsapp: { label: 'Chat WhatsApp', url: 'https://wa.me/6285281144792', iconClass: 'fab fa-whatsapp' },
+              email: { label: 'Kirim Email', url: 'mailto:ibnudexton@gmail.com', iconClass: 'fas fa-envelope' },
+          };
+
+          // Deteksi platform mana yang ditanya, biar tombolnya spesifik (bukan nge-dump semua link)
+          function detectContactLinks(text) {
+              const lower = ' ' + text.toLowerCase() + ' ';
+              const matched = [];
+              if (lower.includes('instagram') || lower.includes(' ig ')) matched.push(CONTACT_LINKS.instagram);
+              if (lower.includes('tiktok') || lower.includes(' tt ')) matched.push(CONTACT_LINKS.tiktok);
+              if (lower.includes('whatsapp') || lower.includes(' wa ') || lower.includes('nomor') || lower.includes('telepon') || lower.includes('hp ')) matched.push(CONTACT_LINKS.whatsapp);
+              if (lower.includes('email') || lower.includes('gmail') || lower.includes('e-mail')) matched.push(CONTACT_LINKS.email);
+              // Gak nyebut platform spesifik tapi nanya kontak secara umum -> kasih semua
+              if (matched.length === 0 && (lower.includes('kontak') || lower.includes('contact') || lower.includes('hubungi'))) {
+                  return [CONTACT_LINKS.whatsapp, CONTACT_LINKS.instagram, CONTACT_LINKS.email];
+              }
+              return matched;
+          }
+
+          function addMessage(text, sender, i18nKey, links) {
               const msg = document.createElement('div');
               msg.className = 'chatbot-msg ' + sender;
               if (i18nKey) msg.setAttribute('data-i18n', i18nKey);
               body.appendChild(msg);
+
+              const renderLinks = () => {
+                  if (!links || !links.length) return;
+                  const linkRow = document.createElement('div');
+                  linkRow.className = 'chatbot-link-row';
+                  links.forEach(link => {
+                      const a = document.createElement('a');
+                      a.href = link.url;
+                      a.target = '_blank';
+                      a.rel = 'noopener noreferrer';
+                      a.className = 'chatbot-link-btn';
+                      a.innerHTML = `<i class="${link.iconClass}"></i> ${link.label}`;
+                      linkRow.appendChild(a);
+                  });
+                  body.appendChild(linkRow);
+                  body.scrollTop = body.scrollHeight;
+              };
 
               if (sender === 'bot') {
                   let i = 0;
@@ -1192,6 +1232,7 @@ function App() {
                       body.scrollTop = body.scrollHeight;
                       i++;
                       if (i <= text.length) setTimeout(typeChar, speed);
+                      else renderLinks();
                   })();
               } else {
                   msg.textContent = text;
@@ -1247,18 +1288,23 @@ function App() {
               { keys: ['halo', 'hai', ' hi ', 'hello', 'pagi', 'siang', 'malam', 'hey'], answer: 'chatbotAnsGreeting' },
               { keys: ['makasih', 'terima kasih', 'thanks', 'thank you'], answer: 'chatbotAnsThanks' },
               { keys: ['kamu siapa', 'siapa kamu', 'who are you', 'kamu bot', 'are you a bot'], answer: 'chatbotAnsBotId' },
-              { keys: ['dimana', 'lokasi', 'alamat', 'where', 'location', 'tangerang'], answer: 'chatbotAnsLocation' },
-              { keys: ['sekolah', 'smk', 'pendidikan', 'lulusan', 'education', 'school', 'kuliah'], answer: 'chatbotAnsEducation' },
-              { keys: ['pengalaman', 'berapa tahun', 'experience', 'years'], answer: 'chatbotAnsExperience' },
+              { keys: ['tangerang'], answer: 'chatbotAnsLocation' },
+              { keys: ['dimana ibnu', 'lokasi ibnu', 'alamat ibnu', 'ibnu dimana', 'ibnu tinggal', 'kamu dimana', 'kamu tinggal', 'domisili', 'where does ibnu', 'where is ibnu'], answer: 'chatbotAnsLocation' },
+              { keys: ['sekolah ibnu', 'smk ibnu', 'pendidikan ibnu', 'lulusan ibnu', 'kuliah ibnu', 'ibnu sekolah', 'ibnu kuliah', 'ibnu lulusan', 'kamu sekolah', 'kamu kuliah', 'education of ibnu'], answer: 'chatbotAnsEducation' },
+              { keys: ['pengalaman ibnu', 'pengalaman kamu', 'ibnu berapa tahun', 'ibnu experience', 'experience of ibnu'], answer: 'chatbotAnsExperience' },
               { keys: ['react', 'next', 'javascript', 'tailwind', 'php', 'laravel', 'mysql', 'firebase', 'flutter', 'dart', 'tech stack', 'teknologi', 'framework'], answer: 'chatbotAnsTech' },
               { keys: ['harga', 'biaya', 'price', 'order', 'jasa', 'sewa', 'hire'], answer: 'chatbotAnsOrder' },
-              { keys: ['tentang', 'siapa', 'about', 'who', 'profil'], answer: 'chatbotAns1' },
-              { keys: ['skill', 'keahlian', 'kemampuan', 'expertise', 'bisa apa'], answer: 'chatbotAns2' },
-              { keys: ['proyek', 'project', 'karya', 'portofolio', 'portfolio', 'work'], answer: 'chatbotAns3' },
-              { keys: ['kontak', 'contact', 'hubungi', 'email', 'whatsapp', ' wa '], answer: 'chatbotAns4' },
-              { keys: ['makan', 'hobi', 'umur', 'age', 'food', 'favorite', 'favorit', 'lahir', 'ulang tahun'], answer: 'chatbotAnsUnknownPersonal' },
+              { keys: ['tentang ibnu', 'tentang kamu', 'tentang dirimu', 'siapa ibnu', 'siapa dexton', 'siapa itu ibnu', 'profil ibnu', 'profil kamu', 'about ibnu', 'about dexton', 'who is ibnu', 'who is dexton'], answer: 'chatbotAns1' },
+              { keys: ['skill ibnu', 'skill kamu', 'keahlian ibnu', 'keahlian kamu', 'kemampuan ibnu', 'ibnu bisa apa', 'kamu bisa apa', 'expertise of ibnu'], answer: 'chatbotAns2' },
+              { keys: ['proyek ibnu', 'project ibnu', 'karya ibnu', 'portofolio ibnu', 'portfolio ibnu', 'proyek kamu', 'project kamu', 'karya kamu', 'work of ibnu'], answer: 'chatbotAns3' },
+              { keys: ['kontak', 'contact', 'hubungi', 'email', 'whatsapp', ' wa ', 'instagram', ' ig '], answer: 'chatbotAns4' },
+              { keys: ['makanan favorit ibnu', 'hobi ibnu', 'umur ibnu', 'makanan favorit kamu', 'hobi kamu', 'umur kamu', 'age of ibnu', 'lahir ibnu', 'ulang tahun ibnu'], answer: 'chatbotAnsUnknownPersonal' },
           ];
 
+          // Catatan: keyword di atas sengaja dianchor pake 'ibnu'/'kamu'/dll biar gak
+          // asal nyamber pertanyaan soal orang/topik lain (misal "siapa soekarno").
+          // Kalau gak ada anchor yang cocok, otomatis lolos ke askAI() di bawah,
+          // dan backend AI sendiri yang nolak kalau emang di luar topik Ibnu Dexton.
           function detectAnswer(text) {
               const lower = ' ' + text.toLowerCase() + ' ';
               const found = KEYWORD_MAP.find(entry => entry.keys.some(k => lower.includes(k)));
@@ -1291,12 +1337,14 @@ function App() {
 
               if (answerKey) {
                   // Ketemu di keyword map lokal -> gratis, gak kena API sama sekali
-                  showTyping(() => addMessage(t(answerKey), 'bot'));
+                  const links = answerKey === 'chatbotAns4' ? detectContactLinks(displayText) : null;
+                  showTyping(() => addMessage(t(answerKey), 'bot', null, links));
               } else {
                   // Gak ketemu lokal -> baru lempar ke AI backend
                   showTyping(async () => {
                       const aiReply = await askAI(displayText);
-                      addMessage(aiReply, 'bot');
+                      const links = detectContactLinks(displayText);
+                      addMessage(aiReply, 'bot', null, links.length ? links : null);
                   });
               }
           }

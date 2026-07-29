@@ -124,7 +124,7 @@ export const translations = {
     chatbotAns1: 'Ibnu Dexton adalah lulusan SMKN 5 Kota Tangerang jurusan Desain Komunikasi Visual, fokus di UI/UX, graphic design, motion design, dan frontend dev. Udah kerja bareng berbagai klien dari macam-macam industri!',
     chatbotAns2: 'Keahlian utamanya: UI/UX Design, Graphic Design, Motion Design, dan Frontend Dev (HTML, CSS, JS, React). Buat tech stack lengkap bisa cek section "Tumpukan Teknologi" ya!',
     chatbotAns3: 'Beberapa proyeknya: Brand Identity Garuda Private Server, Custom Vector Logo, Packaging Keripik Tempe, sampai Social Media Kit buat brand sepatu lokal. Scroll ke section "Arsip Proyek" buat lihat semua!',
-    chatbotAns4: 'Gampang! Scroll ke section "Hubungi Saya" di bawah, isi form kontaknya, atau langsung klik "Hubungi Saya" di hero section paling atas. Ibnu berbasis di Tangerang, Indonesia',
+    chatbotAns4: 'Gampang! Scroll ke section "Hubungi Saya" di bawah, isi form kontaknya, atau klik link ini',
     chatbotFallback: 'Hmm, aku belum ngerti pertanyaan itu Coba pencet salah satu tombol cepat di bawah, atau tanya soal profil, skill, proyek, sama kontak ya!',
     chatbotMenuAria: 'Menu Chat',
     chatbotMenuNew: 'Mulai Chat Baru',
@@ -138,7 +138,7 @@ export const translations = {
     chatbotAnsEducation: 'Ibnu lulusan SMKN 5 Kota Tangerang, jurusan Desain Komunikasi Visual.',
     chatbotAnsExperience: 'Udah beberapa tahun terjun di dunia desain & frontend dev, kerja bareng berbagai klien dari macam-macam industri. Detail angkanya bisa dicek di section "Tentang Saya" ya!',
     chatbotAnsTech: 'Tech stack Ibnu: React, Next.js, JavaScript, Tailwind CSS buat frontend; PHP, Laravel, MySQL, Firebase buat backend; Flutter & Dart buat mobile. Detailnya ada di section "Tumpukan Teknologi"!',
-    chatbotAnsOrder: 'Buat order jasa atau kerja sama, langsung aja isi form di section "Hubungi Saya" atau klik "Hubungi Saya" di hero section ya!',
+    chatbotAnsOrder: 'Buat order jasa atau kerja sama, langsung aja isi form di section "Hubungi Saya" atau klik "Hubungi Saya" di section paling atas ya!',
     chatbotAnsUnknownPersonal: 'Wah, info spesifik itu belum ada di data yang aku punya Coba tanya langsung ke Ibnu lewat form kontak ya!',
   },
 
