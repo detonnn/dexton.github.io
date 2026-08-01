@@ -1,0 +1,462 @@
+/* ==========================================================
+   HERO.CSS — Landing / bagian utama paling atas
+   ========================================================== */
+
+
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    padding: 140px 30px 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -5%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatBg 15s ease-in-out infinite;
+}
+
+
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+
+
+.hero-content {
+    display: grid !important; /* Tambahkan !important sementara untuk memotong override */
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+
+
+.hero-text {
+    position: relative;
+    z-index: 1;
+}
+
+
+
+.hero-greeting {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-bottom: 15px;
+}
+
+
+
+.hero-title span {
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+
+
+/* --- Hover Nama: "Ibnu Dexton" -> "Muhammad Ibnu Dexton Alfathir" --- */
+.hero-name-hover {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+
+.hero-name-hover .name-short,
+.hero-name-hover .name-full {
+    display: block;
+    white-space: nowrap;
+}
+
+
+
+.hero-name-hover .name-word {
+    display: inline-block;
+}
+
+
+
+.hero-name-hover .name-letter {
+    display: inline-block;
+    color: #ffffff;
+    text-shadow: none;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity, filter;
+}
+
+
+
+/* Teks pendek (default, terlihat) */
+.name-short .name-letter {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+}
+
+
+
+/* Teks panjang (tersembunyi, di-overlay tepat di atas teks pendek, satu baris ke kanan) */
+.hero-name-hover .name-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.8em;
+    line-height: 1.3;
+    pointer-events: none;
+}
+
+
+
+.name-full .name-letter {
+    opacity: 0;
+    transform: translateX(-14px);
+    filter: blur(6px);
+}
+
+
+
+/* Saat di-hover: teks pendek memudar & geser sedikit ke kanan, teks panjang muncul menyusul dari kiri ke kanan */
+.hero-name-hover:hover .name-short .name-letter {
+    opacity: 0;
+    transform: translateX(10px);
+    filter: blur(6px);
+}
+
+
+
+.hero-name-hover:hover .name-full .name-letter {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+}
+
+
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--primary);
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+
+
+.hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 450px;
+    margin-bottom: 25px;
+    line-height: 1.8;
+}
+
+
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+
+
+.hero-social {
+    display: flex;
+    gap: 15px;
+}
+
+
+
+.hero-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: var(--shadow);
+}
+
+
+
+.hero-social a:hover {
+    background: var(--primary);
+    color: #0B0B0C;
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+
+
+.hero-image {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+.profile-wrapper {
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+    transform: translateZ(0px);
+    
+    /* --- TAMBAHAN EFEK MONOKROM --- */
+    filter: grayscale(100%);
+    transition: filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+
+/* --- TRIGER KETIKA CURSOR MENGARAH KE PFP --- */
+.profile-wrapper:hover .profile-img {
+    filter: grayscale(0%);
+}
+
+
+.profile-ring {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: calc(100% + 30px);
+    height: calc(100% + 30px);
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    animation: rotateRing 6s linear infinite;
+}
+
+
+
+.profile-ring::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    animation: rotateRingReverse 4s linear infinite;
+}
+
+
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text);
+    font-size: 0.8rem;
+    animation: bounce 2s ease infinite;
+    opacity: 0.6;
+}
+
+
+
+.scroll-indicator i {
+    margin-top: 5px;
+}
+
+
+
+/* Responsive */
+@media (max-width: 992px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-desc {
+        margin: 0 auto 25px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-social {
+        justify-content: center;
+    }
+
+    .profile-wrapper {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .profile-wrapper {
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero {
+        padding-top: 80px;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    /* Fix nama panjang pas hover di HP: dulu numpuk dari kiri & kepotong ke kanan.
+       Sekarang di-center pakai left:50% + translateX(-50%), dan boleh wrap 2 baris. */
+    .hero-name-hover .name-full {
+        left: 50%;
+        transform: translateX(-50%);
+        width: max-content;
+        max-width: 90vw;
+        white-space: normal;
+        text-align: center;
+        font-size: 0.55em;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+.profile-wrapper {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+    transform: translateZ(0px);
+}
+
+
+
+.profile-ring {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    z-index: 4;
+}
+
+
+
+.profile-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.6);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+    transform: rotateX(65deg) rotateY(20deg) translateZ(-10px);
+    animation: macaroniSpiral 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
+
+.profile-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 5px solid #ffffff;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+    transform: rotateX(65deg) rotateY(20deg) translateZ(10px);
+    animation: macaroniSpiral 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: -1.5s;
+}

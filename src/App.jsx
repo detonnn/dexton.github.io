@@ -1,38 +1,15 @@
 import React, { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
-import './app.css';
+import './style/global.css';
+import './style/navbar.css';
+import './style/hero.css';
+import './style/skills.css';
+import './style/projects.css';
 import { translations, CF_MODELS } from './i18n';
-
-// --- Helper untuk animasi hover nama (huruf per huruf dengan delay bertahap) ---
-function renderAnimatedName(text, keyPrefix) {
-  const words = text.split(' ');
-  let letterIndex = 0;
-  const nodes = [];
-
-  words.forEach((word, wi) => {
-    nodes.push(
-      <span className="name-word" key={`${keyPrefix}-w${wi}`}>
-        {word.split('').map((ch, ci) => {
-          const delay = (letterIndex++) * 0.028;
-          return (
-            <span
-              key={`${keyPrefix}-w${wi}-c${ci}`}
-              className="name-letter"
-              style={{ transitionDelay: `${delay}s` }}
-            >
-              {ch}
-            </span>
-          );
-        })}
-      </span>
-    );
-    if (wi < words.length - 1) {
-      nodes.push(' ');
-    }
-  });
-
-  return nodes;
-}
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
 
 function App() {
   useEffect(() => {
@@ -1473,68 +1450,10 @@ function App() {
       </div>
 
       {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <img src="/16bit-80s.gif" alt="Walking Cat" className="nav-cat-walking" id="navCat" />
-
-          <div className="nav-logo" data-aos="fade-right">
-            <span>Ibnu dexton</span>
-          </div>
-          <ul className="nav-menu">
-            <li><a href="#home" className="active" data-i18n="navHome">Home</a></li>
-            <li><a href="#about" data-i18n="navAbout">Tentang</a></li>
-            <li><a href="#skills" data-i18n="navSkills">Keahlian</a></li>
-            <li><a href="#techstack" data-i18n="navTechstack">Tech Stack</a></li>
-            <li><a href="#projects" data-i18n="navProjects">Proyek</a></li>
-            <li><a href="#contact" data-i18n="navContact">Kontak</a></li>
-            <div className="nav-indicator"></div>
-          </ul>
-          <div className="nav-toggle" id="mobile-menu" data-aos="fade-left">
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
-      <section id="home" className="hero">
-        <div className="hero-container">
-          <div className="hero-content">
-            {/* === KOTAK TEKS (SISI KIRI) === */}
-            <div className="hero-text">
-              <p className="hero-greeting" data-i18n="heroGreeting">Halo, Saya</p>
-              <h1 className="hero-title hero-name-hover">
-                <span className="name-short">{renderAnimatedName('Ibnu Dexton', 'short')}</span>
-                <span className="name-full" aria-hidden="true">{renderAnimatedName('Muhamad Ibnu Dexton Alfathir', 'full')}</span>
-              </h1>
-              <p className="hero-subtitle" data-i18n="heroSubtitle">Desainer Komunikasi Visual | Lulusan SMKN 5 Kota Tangerang</p>
-              <p className="hero-desc" data-i18n="heroDesc">Menciptakan karya visual yang impactful dan estetis untuk berbagai client ternama.</p>
-              <div className="hero-buttons">
-                <a href="#projects" className="btn btn-primary" data-i18n="heroBtnProjects">Lihat Proyek</a>
-                <a href="#contact" className="btn btn-secondary" data-i18n="heroBtnContact">Hubungi Saya</a>
-              </div>
-              <div className="hero-social">
-                <a href="https://www.instagram.com/dxtnn_" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@risemss" target="_blank" rel="noopener noreferrer"><i className="fab fa-tiktok"></i></a>
-                <a href="https://wa.me/6285281144792" target="_blank" rel="noopener noreferrer"><i className="fab fa-whatsapp"></i></a>
-              </div>
-            </div>
-
-            {/* === KOTAK FOTO PROFIL (SISI KANAN) === */}
-            <div className="hero-image">
-              <div className="profile-wrapper">
-                <img src="/newpfp.png" alt="Ibnu Dexton" className="profile-img" id="profile-img" />
-                <div className="profile-ring"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="scroll-indicator">
-          <span data-i18n="scrollIndicator">Scroll</span>
-          <i className="fas fa-chevron-down"></i>
-        </div>
-      </section>
+      <Hero />
 
       {/* About Section */}
       <section id="about" className="about">
@@ -1575,40 +1494,7 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="skills">
-        <div className="container">
-          <div className="section-header">
-            <h2 data-i18n="skillsHeader">Keahlian</h2>
-            <div className="underline"></div>
-          </div>
-          <div className="skills-grid">
-            <div className="skill-card">
-              <div className="skill-icon"><i className="fab fa-figma"></i></div>
-              <h3 data-i18n="skillUiuxTitle">UI/UX Design</h3>
-              <p data-i18n="skillUiuxDesc">Mendesain antarmuka yang intuitif dan pengalaman pengguna yang engaging.</p>
-              <div className="skill-bar"><div className="skill-progress" style={{ width: '90%' }}></div></div>
-            </div>
-            <div className="skill-card">
-              <div className="skill-icon"><i className="fas fa-pen-nib"></i></div>
-              <h3 data-i18n="skillGraphicTitle">Graphic Design</h3>
-              <p data-i18n="skillGraphicDesc">Desain grafis untuk branding, marketing, dan kebutuhan visual lainnya.</p>
-              <div className="skill-bar"><div className="skill-progress" style={{ width: '95%' }}></div></div>
-            </div>
-            <div className="skill-card">
-              <div className="skill-icon"><i className="fas fa-mobile-alt"></i></div>
-              <h3 data-i18n="skillMotionTitle">Motion Design</h3>
-              <p data-i18n="skillMotionDesc">Animasi dan motion graphics untuk konten digital yang dinamis.</p>
-              <div className="skill-bar"><div className="skill-progress" style={{ width: '80%' }}></div></div>
-            </div>
-            <div className="skill-card">
-              <div className="skill-icon"><i className="fas fa-code"></i></div>
-              <h3 data-i18n="skillFrontendTitle">Frontend Dev</h3>
-              <p data-i18n="skillFrontendDesc">Membangun website responsif dengan HTML, CSS, dan JavaScript.</p>
-              <div className="skill-bar"><div className="skill-progress" style={{ width: '75%' }}></div></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Skills />
 
       {/* Tech Stack Section */}
       <section id="techstack" className="techstack">
@@ -1722,83 +1608,7 @@ function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="projects">
-        <div className="container">
-          <div className="section-header">
-            <h2 data-i18n="projectsHeader">Proyek Archive</h2>
-            <div className="underline"></div>
-          </div>
-          <div className="projects-grid">
-            <a href="https://www.garudaps.com/" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('GARUDA PS 2026.jpg')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj1Title">brand identity server - Garuda Private Server</h3>
-                  <p data-i18n="proj1Desc">Produksi dan editing video kreatif menggunakan CapCut PC, pembuatan poster, banner, serta optimasi visual thumbnail YouTube untuk meningkatkan CTR klien.</p>
-                  <span className="project-tag tag-amber" data-i18n="proj1Tag">Branding</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-            <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('logos.jpg')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj2Title">Custom Vector Logo & Typography Modification</h3>
-                  <p data-i18n="proj2Desc">Eksperimen dan pengerjaan modifikasi font serta pembuatan logo vektor kustom menggunakan Adobe Illustrator untuk kebutuhan branding komersial.</p>
-                  <span className="project-tag tag-cyan" data-i18n="proj2Tag">custom edit</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-            <a href="https://www.instagram.com/azkaprint.official/" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('azka.png')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj3Title">Print Media Design & Packaging Workflow - Internship</h3>
-                  <p data-i18n="proj3Desc">Pengalaman 3 bulan magang di industri percetakan dan online shop packing, menangani kesiapan berkas desain sebelum naik cetak dan standardisasi visual produk.</p>
-                  <span className="project-tag tag-lime" data-i18n="proj3Tag">Layout & Cetak</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-            <a href="https://www.instagram.com/attics.std?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('atticsjpg.jpg')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj4Title">create own brand</h3>
-                  <p data-i18n="proj4Desc">Desain layout katalog dan majalah visual berskala cetak untuk mempromosikan brand fashion lokal asal Tangerang.</p>
-                  <span className="project-tag tag-amber" data-i18n="proj4Tag">Layout & Cetak</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-            <a href="https://www.behance.net/gallery/103215571/Tempeh-Chips-Packaging-Design" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop&q=80')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj5Title">Packaging Design - Keripik Tempe Modern</h3>
-                  <p data-i18n="proj5Desc">Desain kemasan makanan ringan lokal dengan ilustrasi modern dan ramah lingkungan agar bersaing di pasar modern.</p>
-                  <span className="project-tag tag-lime" data-i18n="proj5Tag">Packaging</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-            <a href="https://www.behance.net/gallery/121115321/Sneakers-Brand-Social-Media-Campaign-Design" target="_blank" rel="noopener noreferrer" className="project-card-link">
-              <div className="project-card">
-                <div className="project-img" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80')" }}></div>
-                <div className="project-info">
-                  <h3 data-i18n="proj6Title">Social Media Kit - Campaign Launch</h3>
-                  <p data-i18n="proj6Desc">Pembuatan aset visual promosi Instagram feeds dan story untuk produk sepatu lokal berkolaborasi dengan seniman mural.</p>
-                  <span className="project-tag tag-cyan" data-i18n="proj6Tag">Social Media</span>
-                  <span className="view-project"><span data-i18n="viewProject">Lihat Proyek</span> <i className="fas fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
+      <Projects />
       {/* Contact Section */}
       <section id="contact" className="contact reveal-init">
         <div className="container">

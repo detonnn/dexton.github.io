@@ -1,8 +1,16 @@
+/* ==========================================================
+   GLOBAL.CSS — Reset, variabel warna, font, animasi umum,
+   loader, particles, cursor follower, chatbot, about,
+   techstack, contact, footer, responsive lintas-komponen
+   ========================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
 
 :root {
     --primary: #ffffff;
@@ -18,6 +26,8 @@
     --glass-highlight: rgba(255, 255, 255, 0.15);
     --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+
+
 html {
     overflow-x: hidden;
     max-width: 100%;
@@ -25,26 +35,38 @@ html {
        Lenis udah handle semua smooth scroll-nya sendiri. */
 }
 
+
+
 /* Lenis Smooth Scroll CSS setup */
 html.lenis, html.lenis body {
   height: auto;
 }
 
+
+
 .lenis-smooth {
   scroll-behavior: auto !important;
 }
+
+
 
 .lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
 
+
+
 .lenis-stopped {
   overflow: hidden;
 }
 
+
+
 .lenis-scrolling iframe {
   pointer-events: none;
 }
+
+
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -54,6 +76,8 @@ body {
     position: relative;
     min-height: 100vh;
 }
+
+
 
 /* Mesh background dipindah ke layer fixed terpisah (bukan background-attachment:fixed
    di body). "fixed" di body itu mahal banget: browser wajib repaint seluruh background
@@ -70,6 +94,8 @@ body::before {
     will-change: transform;
 }
 
+
+
 /* Background Blobs for Glassmorphism */
 .bg-blobs {
     position: fixed;
@@ -82,6 +108,8 @@ body::before {
     pointer-events: none;
 }
 
+
+
 .blob {
     position: absolute;
     border-radius: 50%;
@@ -91,6 +119,8 @@ body::before {
     animation: floatBlob 20s infinite alternate ease-in-out;
 }
 
+
+
 .blob-1 {
     width: 500px;
     height: 500px;
@@ -98,6 +128,8 @@ body::before {
     top: -10%;
     left: -10%;
 }
+
+
 
 .blob-2 {
     width: 600px;
@@ -108,6 +140,8 @@ body::before {
     animation-delay: -5s;
 }
 
+
+
 .blob-3 {
     width: 400px;
     height: 400px;
@@ -116,6 +150,8 @@ body::before {
     right: 15%;
     animation-delay: -10s;
 }
+
+
 
 .blob-4 {
     width: 450px;
@@ -126,11 +162,15 @@ body::before {
     animation-delay: -15s;
 }
 
+
+
 @keyframes floatBlob {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(80px, -50px) scale(1.15); }
     100% { transform: translate(-40px, 60px) scale(0.9); }
 }
+
+
 
 /* Loader Area */
 #loader {
@@ -154,12 +194,16 @@ body::before {
     overflow: hidden;
 }
 
+
+
 #loader.hide {
     opacity: 0;
     visibility: hidden;
     filter: blur(25px);
     pointer-events: none;
 }
+
+
 
 /* Loader Content dipaksa relative buat patokan Center Absolute tombol */
 .loader-content {
@@ -171,6 +215,8 @@ body::before {
     width: 100vw;
     height: 100vh;
 }
+
+
 
 .loader-title {
     /* 1. Ganti font-family di sini */
@@ -188,6 +234,8 @@ body::before {
     z-index: 10;
     cursor: default;
 }
+
+
 
 /* Custom enter-btn: NGE-LOCK DI TENGAH PERSIS & SEMBUNYI DI AWAL */
 .enter-btn {
@@ -227,6 +275,8 @@ body::before {
                 background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 
+
+
 /* Class trigger pemicu dari JavaScript */
 .enter-btn.show-enter {
     opacity: 1;
@@ -234,6 +284,8 @@ body::before {
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1); /* Balik ke normal di tengah */
 }
+
+
 
 .enter-btn::before {
     content: '';
@@ -247,9 +299,13 @@ body::before {
     transition: opacity 0.4s ease;
 }
 
+
+
 .enter-btn:hover::before {
     opacity: 1;
 }
+
+
 
 .enter-btn-icon {
     display: inline-flex;
@@ -261,15 +317,21 @@ body::before {
     overflow: hidden;
 }
 
+
+
 .enter-btn:hover .enter-btn-icon {
     width: 14px;
     opacity: 1;
     transform: translateX(0);
 }
 
+
+
 @keyframes enterRingSpin {
     to { transform: rotate(360deg); }
 }
+
+
 
 /* Hover pas tombol udah aktif */
 .enter-btn:hover {
@@ -281,6 +343,8 @@ body::before {
     transform: translate(-50%, -50%) scale(1.06) !important; /* Tetap pertahankan titik tengah */
 }
 
+
+
 @keyframes loaderFadeIn {
     to {
         opacity: 1;
@@ -289,263 +353,13 @@ body::before {
 }
 
 
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 1200px;
-    padding: 12px 24px;
-    z-index: 1000;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-radius: 50px;
-    box-shadow: var(--shadow);
-}
-
-.navbar.scrolled {
-    padding: 10px 24px;
-    background: rgba(30, 31, 34, 0.75);
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-.nav-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #ffffff;
-    /* Tambahkan ini agar z-index berfungsi */
-    position: relative; 
-    z-index: 1010; /* Angka ini harus lebih besar dari z-index kucing */
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 10px;
-    align-items: center;
-    /* Ubah atau pastikan z-index-nya lebih besar dari kucing */
-    position: relative;
-    z-index: 1010; /* Angka ini harus lebih besar dari z-index kucing */
-}
-.nav-menu a {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-weight: 500;
-    font-size: 0.9rem;
-    padding: 8px 18px;
-    border-radius: 30px;
-    position: relative;
-    display: inline-block;
-    border: 1px solid transparent;
-    transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease !important;
-}
-
-.nav-menu a:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.nav-menu a.active {
-    color: var(--primary) !important;
-    background: transparent !important;
-    border: 1px solid transparent !important;
-}
-
-.nav-indicator {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 30px;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-.nav-menu a:focus {
-    outline: none;
-}
-
-.nav-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.nav-toggle span {
-    width: 22px;
-    height: 2px;
-    background: var(--text);
-    margin: 3px 0;
-    transition: 0.3s;
-    border-radius: 2px;
-}
-
-/* Hero Section */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: transparent;
-    padding: 140px 30px 50px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    right: -5%;
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: floatBg 15s ease-in-out infinite;
-}
 
 @keyframes floatBg {
     0%, 100% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(-30px, 30px) scale(1.05); }
 }
 
-.hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
 
-.hero-content {
-    display: grid !important; /* Tambahkan !important sementara untuk memotong override */
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
-}
-
-.hero-text {
-    position: relative;
-    z-index: 1;
-}
-
-.hero-greeting {
-    font-size: 1.1rem;
-    color: var(--primary);
-    font-weight: 500;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 1.1;
-    margin-bottom: 15px;
-}
-
-.hero-title span {
-    color: var(--primary);
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
-/* --- Hover Nama: "Ibnu Dexton" -> "Muhammad Ibnu Dexton Alfathir" --- */
-.hero-name-hover {
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-}
-
-.hero-name-hover .name-short,
-.hero-name-hover .name-full {
-    display: block;
-    white-space: nowrap;
-}
-
-.hero-name-hover .name-word {
-    display: inline-block;
-}
-
-.hero-name-hover .name-letter {
-    display: inline-block;
-    color: #ffffff;
-    text-shadow: none;
-    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform, opacity, filter;
-}
-
-/* Teks pendek (default, terlihat) */
-.name-short .name-letter {
-    opacity: 1;
-    transform: translateX(0);
-    filter: blur(0);
-}
-
-/* Teks panjang (tersembunyi, di-overlay tepat di atas teks pendek, satu baris ke kanan) */
-.hero-name-hover .name-full {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 0.8em;
-    line-height: 1.3;
-    pointer-events: none;
-}
-
-.name-full .name-letter {
-    opacity: 0;
-    transform: translateX(-14px);
-    filter: blur(6px);
-}
-
-/* Saat di-hover: teks pendek memudar & geser sedikit ke kanan, teks panjang muncul menyusul dari kiri ke kanan */
-.hero-name-hover:hover .name-short .name-letter {
-    opacity: 0;
-    transform: translateX(10px);
-    filter: blur(6px);
-}
-
-.hero-name-hover:hover .name-full .name-letter {
-    opacity: 1;
-    transform: translateX(0);
-    filter: blur(0);
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: var(--primary);
-    font-weight: 500;
-    margin-bottom: 15px;
-}
-
-.hero-desc {
-    font-size: 1rem;
-    color: var(--text-muted);
-    max-width: 450px;
-    margin-bottom: 25px;
-    line-height: 1.8;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
 
 .btn {
     padding: 12px 30px;
@@ -557,6 +371,8 @@ body::before {
     display: inline-block;
 }
 
+
+
 .btn-primary {
     background: var(--primary);
     color: #0B0B0C;
@@ -564,10 +380,14 @@ body::before {
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
 }
 
+
+
 .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(255, 255, 255, 0.6);
 }
+
+
 
 .btn-secondary {
     background: var(--glass-bg);
@@ -576,6 +396,8 @@ body::before {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 }
+
+
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.08);
@@ -586,126 +408,28 @@ body::before {
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
 }
 
-.hero-social {
-    display: flex;
-    gap: 15px;
-}
 
-.hero-social a {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: var(--shadow);
-}
-
-.hero-social a:hover {
-    background: var(--primary);
-    color: #0B0B0C;
-    border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-}
-
-.hero-image {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-}
-
-.profile-wrapper {
-    position: relative;
-    width: 350px;
-    height: 350px;
-}
-
-.profile-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--glass-border);
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 2;
-    transform: translateZ(0px);
-    
-    /* --- TAMBAHAN EFEK MONOKROM --- */
-    filter: grayscale(100%);
-    transition: filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* --- TRIGER KETIKA CURSOR MENGARAH KE PFP --- */
-.profile-wrapper:hover .profile-img {
-    filter: grayscale(0%);
-}
-.profile-ring {
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    width: calc(100% + 30px);
-    height: calc(100% + 30px);
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top: 3px solid #ffffff;
-    border-bottom: 3px solid #ffffff;
-    animation: rotateRing 6s linear infinite;
-}
-
-.profile-ring::after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    border-left: 2px solid #ffffff;
-    border-right: 2px solid #ffffff;
-    animation: rotateRingReverse 4s linear infinite;
-}
 
 @keyframes rotateRing {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
+
+
 @keyframes rotateRingReverse {
     0% { transform: rotate(360deg); }
     100% { transform: rotate(0deg); }
 }
 
-.scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--text);
-    font-size: 0.8rem;
-    animation: bounce 2s ease infinite;
-    opacity: 0.6;
-}
 
-.scroll-indicator i {
-    margin-top: 5px;
-}
 
 @keyframes bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-10px); }
 }
+
+
 
 .container {
     max-width: 1200px;
@@ -713,10 +437,14 @@ body::before {
     padding: 0 30px;
 }
 
+
+
 .section-header {
     text-align: center;
     margin-bottom: 60px;
 }
+
+
 
 .section-header h2 {
     font-size: 2.5rem;
@@ -724,6 +452,8 @@ body::before {
     font-weight: 700;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
 }
+
+
 
 .underline {
     width: 60px;
@@ -733,10 +463,14 @@ body::before {
     border-radius: 2px;
 }
 
+
+
 .about {
     padding: 100px 0;
     background: transparent;
 }
+
+
 
 .about-content {
     display: grid;
@@ -744,6 +478,8 @@ body::before {
     gap: 60px;
     align-items: center;
 }
+
+
 
 .about-text {
     background: var(--glass-bg);
@@ -755,11 +491,15 @@ body::before {
     box-shadow: var(--shadow);
 }
 
+
+
 .about-text h3 {
     font-size: 1.8rem;
     margin-bottom: 20px;
     color: #ffffff;
 }
+
+
 
 .about-text p {
     color: var(--text-muted);
@@ -767,15 +507,21 @@ body::before {
     margin-bottom: 15px;
 }
 
+
+
 .about-stats {
     display: flex;
     gap: 40px;
     margin-top: 30px;
 }
 
+
+
 .stat {
     text-align: center;
 }
+
+
 
 .stat-number {
     display: block;
@@ -785,10 +531,14 @@ body::before {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
+
+
 .stat-label {
     font-size: 0.85rem;
     color: var(--text-muted);
 }
+
+
 
 .about-img-wrapper {
     width: 100%;
@@ -807,100 +557,15 @@ body::before {
     box-shadow: var(--shadow);
 }
 
+
+
 .about-img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.skills {
-    padding: 100px 0;
-    background: transparent;
-}
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.skill-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 35px 25px;
-    border-radius: 24px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: var(--shadow);
-}
-
-.skill-card:hover {
-    transform: translateY(-12px);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.skill-icon {
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 15px;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    transition: transform 0.3s ease;
-}
-
-.skill-card:hover .skill-icon {
-    transform: scale(1.15);
-}
-
-.skill-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-.skill-card p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-.skill-bar {
-    width: 100%;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    margin-top: 20px;
-    overflow: hidden;
-}
-
-.skill-card .skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    width: 0% !important; 
-    transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-}
-
-.skill-card:nth-child(1):hover .skill-progress {
-    width: 90% !important;
-}
-
-.skill-card:nth-child(2):hover .skill-progress {
-    width: 95% !important;
-}
-
-.skill-card:nth-child(3):hover .skill-progress {
-    width: 80% !important;
-}
-
-.skill-card:nth-child(4):hover .skill-progress {
-    width: 75% !important;
-}
 
 /* ================================================================
    TECH STACK SECTION
@@ -910,6 +575,8 @@ body::before {
     background: transparent;
 }
 
+
+
 .tech-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -918,6 +585,8 @@ body::before {
        yang sama buat semua kartu, gak perlu JS mousemove sama sekali */
     perspective: 1200px;
 }
+
+
 
 .tech-card {
     background: var(--glass-bg);
@@ -937,15 +606,21 @@ body::before {
     z-index: 1;
 }
 
+
+
 /* Saat salah satu kartu di-hover, kartu lain cuma meredup (tanpa ikut
    mengecil/scale) supaya fokus jatuh ke kartu 3D yang aktif */
 .tech-grid:hover .tech-card.tech-card {
     opacity: 0.55;
 }
 
+
+
 .tech-grid:hover .tech-card.tech-card:hover {
     opacity: 1;
 }
+
+
 
 .tech-card::before {
     content: '';
@@ -957,6 +632,8 @@ body::before {
     transition: opacity 0.4s ease;
     pointer-events: none;
 }
+
+
 
 /* PENTING: begitu kartu selesai reveal (dapet class .in-view dari
    IntersectionObserver), transition-nya di-"lepas" dari delay stagger
@@ -975,11 +652,15 @@ body::before {
     transition-delay: 0s;
 }
 
+
+
 .tech-card.tech-card:hover,
 .tech-grid:hover .tech-card.tech-card {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
     transition-delay: 0s;
 }
+
+
 
 /* Efek 3D pop: kartu "terangkat" ke arah viewer (translateZ) sambil
    miring dikit (rotateX/rotateY) — murni transform, gak ada JS mousemove
@@ -993,9 +674,13 @@ body::before {
     z-index: 5;
 }
 
+
+
 .tech-card:hover::before {
     opacity: 1;
 }
+
+
 
 .tech-card-top {
     display: flex;
@@ -1007,11 +692,15 @@ body::before {
     letter-spacing: 0.06em;
 }
 
+
+
 .tech-category {
     font-weight: 600;
     color: var(--primary-dark);
     opacity: 0.85;
 }
+
+
 
 .tech-version {
     color: var(--text-muted);
@@ -1019,17 +708,37 @@ body::before {
     opacity: 0.7;
 }
 
+
+
 /* Subtle accent colors per category, echoing the reference badges
    while staying inside the site's monochrome glass palette */
 .tag-frontend   { color: #7dd3fc; }
+
+
 .tag-framework  { color: #c4b5fd; }
+
+
 .tag-language   { color: #fde047; }
+
+
 .tag-uilib      { color: #67e8f9; }
+
+
 .tag-backend    { color: #fca5a5; }
+
+
 .tag-database   { color: #86efac; }
+
+
 .tag-baas       { color: #fdba74; }
+
+
 .tag-mobile     { color: #93c5fd; }
+
+
 .tag-core       { color: #d9f99d; }
+
+
 
 .tech-icon {
     display: flex;
@@ -1040,6 +749,8 @@ body::before {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+
+
 .tech-icon img {
     width: 42px;
     height: 42px;
@@ -1048,13 +759,19 @@ body::before {
     transition: filter 0.4s ease;
 }
 
+
+
 .tech-card:hover .tech-icon {
     transform: scale(1.15);
 }
 
+
+
 .tech-card:hover .tech-icon img {
     filter: grayscale(0) brightness(1) drop-shadow(0 0 18px rgba(255, 255, 255, 0.5));
 }
+
+
 
 .tech-card h3 {
     font-size: 1rem;
@@ -1063,6 +780,8 @@ body::before {
     padding-top: 14px;
     border-top: 1px solid var(--glass-border);
 }
+
+
 
 /* Deskripsi tampil sebagai panel mengambang (position: absolute) di bawah
    kartu — sengaja dikeluarkan dari alur normal grid supaya tinggi baris
@@ -1092,10 +811,14 @@ body::before {
     z-index: 6;
 }
 
+
+
 .tech-card:hover .tech-desc {
     opacity: 1;
     transform: translateY(0);
 }
+
+
 
 @media (max-width: 480px) {
     .tech-grid {
@@ -1103,144 +826,22 @@ body::before {
     }
 }
 
-.projects {
-    padding: 100px 0;
-    background: transparent;
-}
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-}
-
-.project-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.project-card {
-    border-radius: 24px;
-    overflow: hidden;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: var(--shadow);
-    /* Sebelumnya "transition: all" — itu bikin browser mantau SEMUA properti
-       (termasuk background, border-radius, dll) tiap kali parent-nya
-       (.project-card-link) di-fade sama reveal observer, padahal cuma
-       transform & box-shadow yang beneran butuh dianimasikan (pas hover).
-       Dipersempit biar ga ada kerjaan repaint nganggur pas kartu muncul. */
-    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
-                box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-    position: relative;
-    /* Isolasi area repaint blur-nya sendiri, biar animasi opacity di parent
-       ga nge-trigger repaint ke elemen lain di section proyek. */
-    contain: layout paint;
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.project-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(255, 255, 255, 0.2);
-}
-
-.project-card:hover::before {
-    opacity: 1;
-}
-
-.project-img {
-    width: 100%;
-    height: 250px;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.project-card:hover .project-img {
-    transform: scale(1.1) rotate(1deg);
-}
-
-.project-info {
-    padding: 25px;
-    position: relative;
-}
-
-.project-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    transition: color 0.3s ease;
-}
-
-.project-card:hover .project-info h3 {
-    color: var(--primary-dark);
-}
-
-.project-info p {
-    color: #7a8a9a;
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-}
-
-.project-tag {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 20px;
-    background: var(--dark);
-    color: var(--primary-dark);
-    font-size: 0.75rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.project-card:hover .project-tag {
-    background: var(--primary-dark);
-    color: var(--dark);
-}
-
-.view-project {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 15px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary-dark);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.project-card:hover .view-project {
-    opacity: 1;
-    transform: translateX(0);
-}
 
 .clients {
     padding: 100px 0;
     background: transparent;
 }
 
+
+
 .clients-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
 }
+
+
 
 .client-card {
     background: var(--glass-bg);
@@ -1254,12 +855,16 @@ body::before {
     box-shadow: var(--shadow);
 }
 
+
+
 .client-card:hover {
     transform: translateY(-10px);
     border-color: rgba(255, 255, 255, 0.4);
     box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
     background: rgba(255, 255, 255, 0.05);
 }
+
+
 
 .client-logo {
     font-size: 2.5rem;
@@ -1268,11 +873,15 @@ body::before {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
+
+
 .client-card h3 {
     font-size: 1.1rem;
     margin-bottom: 10px;
     color: #ffffff;
 }
+
+
 
 .client-card p {
     font-size: 0.9rem;
@@ -1280,6 +889,8 @@ body::before {
     font-style: italic;
     line-height: 1.6;
 }
+
+
 
 .client-card span {
     display: block;
@@ -1289,10 +900,14 @@ body::before {
     font-weight: 600;
 }
 
+
+
 .contact {
     padding: 100px 0;
     background: transparent;
 }
+
+
 
 .contact-content {
     display: grid;
@@ -1300,6 +915,8 @@ body::before {
     gap: 60px;
     align-items: start; /* Properti ini yang menghentikan kolom meregang ke bawah */
 }
+
+
 
 .contact-info {
     background: var(--glass-bg);
@@ -1311,12 +928,16 @@ body::before {
     box-shadow: var(--shadow);
 }
 
+
+
 .contact-item {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
 }
+
+
 
 .contact-item i {
     width: 45px;
@@ -1332,11 +953,15 @@ body::before {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+
+
 .contact-social {
     display: flex;
     gap: 12px;
     margin-top: 25px;
 }
+
+
 
 .contact-social a {
     width: 40px;
@@ -1352,6 +977,8 @@ body::before {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+
+
 .contact-social a:hover {
     background: var(--primary);
     color: var(--dark);
@@ -1359,6 +986,8 @@ body::before {
     border-color: var(--primary);
     transform: translateY(-3px);
 }
+
+
 
 .contact-form {
     background: var(--glass-bg);
@@ -1369,6 +998,8 @@ body::before {
     border-radius: 24px;
     box-shadow: var(--shadow);
 }
+
+
 
 .contact-form input,
 .contact-form textarea {
@@ -1384,10 +1015,14 @@ body::before {
     background: rgba(255, 255, 255, 0.02);
 }
 
+
+
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
     color: #64748b;
 }
+
+
 
 .contact-form input:focus,
 .contact-form textarea:focus {
@@ -1397,11 +1032,15 @@ body::before {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+
+
 .contact-form button {
     width: 100%;
     border: none;
     cursor: pointer;
 }
+
+
 
 /* Footer */
 .footer {
@@ -1411,10 +1050,14 @@ body::before {
     text-align: center;
 }
 
+
+
 .footer p {
     font-size: 0.9rem;
     opacity: 0.7;
 }
+
+
 
 /* Scroll Animations */
 /* Section pembungkus cuma fade opacity aja — gerakan naik/turunnya udah
@@ -1426,9 +1069,13 @@ body::before {
     will-change: opacity;
 }
 
+
+
 .reveal-init.revealed {
     opacity: 1;
 }
+
+
 
 /* Header section (judul + underline) tetap dapat sedikit rise, karena dia
    cuma 1 elemen jadi ga akan bentrok sama animasi grid di bawahnya */
@@ -1438,78 +1085,17 @@ body::before {
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+
 .reveal-init.revealed .section-header {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Reveal per-kartu (proyek, skill, tech, client) — tiap elemen punya
-   IntersectionObserver sendiri (lihat App.jsx), jadi munculnya kartu
-   ngikutin posisi scroll masing-masing, bukan meledak bareng cuma
-   gara-gara section induknya kesentuh threshold sekali. --reveal-delay
-   di-set lewat inline style dari JS buat stagger yang halus & terbatas. */
-.project-card-link,
-.skill-card,
-.client-card,
-.tech-card {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    transition-delay: var(--reveal-delay, 0s);
-    will-change: opacity, transform;
-    /* Kasih layer compositing sendiri (GPU) biar animasi opacity/transform
-       ga ikut mancing browser buat repaint konten di dalamnya (terutama
-       .project-card yang punya backdrop-filter blur + gambar besar —
-       itu yang bikin kartu proyek kerasa lebih patah-patah dibanding
-       skill/tech/client card yang lebih ringan). */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
 
-.project-card-link.in-view,
-.skill-card.in-view,
-.client-card.in-view,
-.tech-card.in-view {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .reveal-init,
-    .reveal-init .section-header,
-    .project-card-link,
-    .skill-card,
-    .client-card,
-    .tech-card {
-        transition-duration: 0.01ms !important;
-        transform: none !important;
-    }
-}
 
 /* Responsive */
 @media (max-width: 992px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .hero-desc {
-        margin: 0 auto 25px;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-    }
-
-    .hero-social {
-        justify-content: center;
-    }
-
-    .profile-wrapper {
-        width: 280px;
-        height: 280px;
-    }
 
     .about-content {
         grid-template-columns: 1fr;
@@ -1523,80 +1109,20 @@ body::before {
    .contact-info {
     height: fit-content;
     }
-
 }
 
+
+
 @media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        background: var(--dark);
-        color: var(--text);
-        flex-direction: column;
-        padding: 30px;
-        gap: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        transition: left 0.4s ease;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-toggle {
-        display: flex;
-    }
-
-    .hero-title {
-        font-size: 2.8rem;
-    }
-
-    .profile-wrapper {
-        width: 220px;
-        height: 220px;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        padding-top: 80px;
-    }
 
     .section-header h2 {
         font-size: 2rem;
     }
 }
 
+
+
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 2.2rem;
-    }
-
-    /* Fix nama panjang pas hover di HP: dulu numpuk dari kiri & kepotong ke kanan.
-       Sekarang di-center pakai left:50% + translateX(-50%), dan boleh wrap 2 baris. */
-    .hero-name-hover .name-full {
-        left: 50%;
-        transform: translateX(-50%);
-        width: max-content;
-        max-width: 90vw;
-        white-space: normal;
-        text-align: center;
-        font-size: 0.55em;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .hero-buttons .btn {
-        width: 100%;
-        text-align: center;
-    }
 
     .about-stats {
         flex-direction: column;
@@ -1604,64 +1130,7 @@ body::before {
     }
 }
 
-.profile-wrapper {
-    position: relative;
-    width: 350px;
-    height: 350px;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
 
-.profile-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--glass-border);
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 2;
-    transform: translateZ(0px);
-}
-
-.profile-ring {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    border-radius: 50%;
-    transform-style: preserve-3d;
-    pointer-events: none;
-    z-index: 4;
-}
-
-.profile-ring::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.6);
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
-    transform: rotateX(65deg) rotateY(20deg) translateZ(-10px);
-    animation: macaroniSpiral 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.profile-ring::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 5px solid #ffffff;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
-    transform: rotateX(65deg) rotateY(20deg) translateZ(10px);
-    animation: macaroniSpiral 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    animation-delay: -1.5s;
-}
 
 @keyframes macaroniSpiral {
     0% {
@@ -1671,6 +1140,8 @@ body::before {
         transform: rotateX(65deg) rotateY(20deg) rotateZ(360deg);
     }
 }
+
+
 
 /* Custom Cursor Follower */
 .cursor-follower {
@@ -1686,21 +1157,29 @@ body::before {
     display: block;
 }
 
+
+
 .cursor-follower img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
+
+
 .about-text {
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
+
 
 .about-text:hover {
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
 }
+
+
 /* =======================================================
    FIX KUCING HITAM KECIL & HOVER GAMBAR UTAMA
    ======================================================= */
@@ -1710,6 +1189,8 @@ body::before {
     position: relative;
     width: 100%;
 }
+
+
 
 /* Kucing dibuat kecil dan presisi di atas pojok kiri */
 /* Kucing digeser agak ke kanan biar ga terlalu kiri bgt */
@@ -1723,48 +1204,22 @@ body::before {
     pointer-events: none; 
 }
 
+
+
 /* Efek default Gambar Utama: Monokrom (Hitam Putih) */
 .about-img-wrapper img {
     filter: grayscale(100%);
     transition: filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+
+
 /* Ketika area gambar di-hover, gambarnya berubah jadi aslinya (berwarna) */
 .about-image:hover .about-img-wrapper img {
     filter: grayscale(0%);
 }
 
-/* =======================================================
-   FIX KUCING JALAN INSTAN & PAS DI LANTAI NAVBAR
-   ======================================================= */
-.navbar {
-    overflow: visible !important; /* Supaya kucing tidak kepotong pas nangkring di bawah garis */
-}
 
-.nav-container {
-    position: relative;
-    height: 100%;
-}
-
-.nav-cat-walking {
-    position: absolute;
-    bottom: -2px; 
-    left: 0;
-    width: 35px; 
-    height: auto;
-    pointer-events: none; 
-    
-    /* Ubah z-index menjadi lebih kecil dari logo dan menu (1010) */
-    z-index: 1001; 
-    
-    /* Kondisi pudar default */
-    opacity: 0; 
-    transition: opacity 0.4s ease; 
-}
-
-.nav-cat-walking.visible {
-    opacity: 1;
-}
 
 /* =======================================================
    ANIMASI CONTACT FORM (FLOATING LABELS)
@@ -1773,6 +1228,8 @@ body::before {
     position: relative;
     margin-bottom: 25px;
 }
+
+
 
 .input-group input,
 .input-group textarea {
@@ -1788,6 +1245,8 @@ body::before {
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
+
+
 .input-group input:focus,
 .input-group textarea:focus {
     outline: none;
@@ -1796,6 +1255,8 @@ body::before {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.1);
     transform: translateY(-2px);
 }
+
+
 
 .input-group label {
     position: absolute;
@@ -1807,6 +1268,8 @@ body::before {
     font-size: 0.95rem;
     z-index: 1;
 }
+
+
 
 /* Floating label mechanics (animasi teks naik) */
 .input-group input:focus ~ label,
@@ -1825,6 +1288,8 @@ body::before {
     border: 1px solid var(--glass-border);
 }
 
+
+
 /* Button Animasi Kilap */
 .btn-animate {
     position: relative;
@@ -1836,6 +1301,8 @@ body::before {
     gap: 10px;
     width: 100%;
 }
+
+
 .btn-animate::before {
     content: '';
     position: absolute;
@@ -1845,9 +1312,13 @@ body::before {
     transition: all 0.6s ease;
     z-index: -1;
 }
+
+
 .btn-animate:hover::before {
     left: 100%;
 }
+
+
 
 /* =======================================================
    GLASSMORPHISM KOMENTAR PENGUNJUNG
@@ -1863,6 +1334,8 @@ body::before {
     box-shadow: var(--shadow);
 }
 
+
+
 .comments-section h3 {
     font-size: 1.8rem;
     color: #ffffff;
@@ -1870,6 +1343,8 @@ body::before {
     text-align: center;
     font-weight: 700;
 }
+
+
 
 .comments-list {
     display: flex;
@@ -1881,10 +1356,18 @@ body::before {
     padding-right: 15px;
 }
 
+
+
 /* Scrollbar khusus untuk daftar komentar */
 .comments-list::-webkit-scrollbar { width: 6px; }
+
+
 .comments-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+
 .comments-list::-webkit-scrollbar-track { background: transparent; }
+
+
 
 .comment-card {
     display: flex;
@@ -1897,11 +1380,15 @@ body::before {
     animation: slideInUp 0.5s ease forwards;
 }
 
+
+
 .comment-card:hover {
     transform: translateX(10px);
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.15);
 }
+
+
 
 .comment-avatar {
     width: 45px;
@@ -1917,12 +1404,16 @@ body::before {
     font-size: 1.2rem;
 }
 
+
+
 .comment-body h4 {
     color: var(--white);
     font-size: 1rem;
     margin-bottom: 5px;
     font-weight: 600;
 }
+
+
 
 .comment-body p {
     color: var(--text-muted);
@@ -1931,10 +1422,14 @@ body::before {
     margin-bottom: 8px;
 }
 
+
+
 .comment-time {
     font-size: 0.75rem;
     color: #64748b;
 }
+
+
 
 .comment-form h4 {
     color: var(--white);
@@ -1942,10 +1437,14 @@ body::before {
     font-size: 1.2rem;
 }
 
+
+
 @keyframes slideInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
 
 /* Particle Background Styles */
 #particleCanvas {
@@ -1958,6 +1457,8 @@ body::before {
     pointer-events: none; /* Supaya text dan tombol tetap bisa diklik */
 }
 
+
+
 /* Partikel Foreground: melayang DI DEPAN kolom teks & foto profil di hero */
 #particleCanvasFront {
     position: fixed;
@@ -1969,6 +1470,8 @@ body::before {
     pointer-events: none; /* Tetap transparan terhadap klik/hover di bawahnya */
 }
 
+
+
 /* =======================================================
    EFEK SHATTER/PECAH TEXT IBNU DEXTON ON HOVER
    ======================================================= */
@@ -1978,6 +1481,8 @@ body::before {
     perspective: 1000px;
 }
 
+
+
 /* Base style untuk tiap huruf */
 .loader-title span {
     display: inline-block;
@@ -1985,6 +1490,8 @@ body::before {
                 opacity 0.5s ease, 
                 filter 0.5s ease;
 }
+
+
 
 /* =======================================================
    EFEK ZERO-GRAVITY SHATTER (PURE JAVASCRIPT PHYSICS)
@@ -1995,6 +1502,8 @@ body::before {
     perspective: 1200px;
 }
 
+
+
 .loader-title span {
     display: inline-block;
     transform-style: preserve-3d;
@@ -2003,31 +1512,59 @@ body::before {
     transition: opacity 1s ease; 
 }
 
+
+
 .loader-title.shattered {
     pointer-events: none; /* Amankan area kursor dari sisa serpihan teks */
 }
+
+
 
 /* Sembunyikan karakter spasi secara instan */
 .loader-title.shattered span.space {
     opacity: 0 !important;
 
 }
+
+
 /* =======================================================
    STAGGERED DELAY & ASSIGNMENT (EFEK RIAK LEDAKAN)
    ======================================================= */
 /* Setiap huruf diberi jeda (delay) beberapa milidetik dari huruf sebelumnya */
 
 .loader-title.shattered span:nth-child(1)  { animation-name: scatter-1; animation-delay: 0s; }
+
+
 .loader-title.shattered span:nth-child(2)  { animation-name: scatter-2; animation-delay: 0.04s; }
+
+
 .loader-title.shattered span:nth-child(3)  { animation-name: scatter-3; animation-delay: 0.08s; }
+
+
 .loader-title.shattered span:nth-child(4)  { animation-name: scatter-4; animation-delay: 0.12s; }
-.loader-title.shattered span:nth-child(5)  { opacity: 0; } /* Spasi */
+
+
+.loader-title.shattered span:nth-child(5)  { opacity: 0; }
+
+ /* Spasi */
 .loader-title.shattered span:nth-child(6)  { animation-name: scatter-5; animation-delay: 0.16s; }
+
+
 .loader-title.shattered span:nth-child(7)  { animation-name: scatter-6; animation-delay: 0.2s; }
+
+
 .loader-title.shattered span:nth-child(8)  { animation-name: scatter-7; animation-delay: 0.24s; }
+
+
 .loader-title.shattered span:nth-child(9)  { animation-name: scatter-8; animation-delay: 0.28s; }
+
+
 .loader-title.shattered span:nth-child(10) { animation-name: scatter-9; animation-delay: 0.32s; }
+
+
 .loader-title.shattered span:nth-child(11) { animation-name: scatter-10; animation-delay: 0.36s; }
+
+
 
 /* =======================================================
    CINEMATIC SCATTER POSITIONS (MENCAR & DIAM MELAYANG)
@@ -2038,50 +1575,70 @@ body::before {
     100% { transform: translate3d(-110px, -45px, 80px) rotateX(45deg) rotateY(-35deg) rotateZ(-20deg); opacity: 0.9; }
 }
 
+
+
 @keyframes scatter-2 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(-60px, -85px, 40px) rotateX(-25deg) rotateY(40deg) rotateZ(35deg); }
 }
+
+
 
 @keyframes scatter-3 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(-15px, -70px, -50px) rotateX(50deg) rotateY(15deg) rotateZ(-15deg); opacity: 0.8; }
 }
 
+
+
 @keyframes scatter-4 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(45px, -95px, 60px) rotateX(-30deg) rotateY(-45deg) rotateZ(50deg); }
 }
+
+
 
 @keyframes scatter-5 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(-90px, 60px, 30px) rotateX(20deg) rotateY(60deg) rotateZ(-40deg); }
 }
 
+
+
 @keyframes scatter-6 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(-30px, 85px, -20px) rotateX(-40deg) rotateY(-20deg) rotateZ(25deg); opacity: 0.85; }
 }
+
+
 
 @keyframes scatter-7 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(25px, 75px, 120px) rotateX(65deg) rotateY(30deg) rotateZ(15deg); }
 }
 
+
+
 @keyframes scatter-8 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(85px, 40px, -10px) rotateX(-15deg) rotateY(-50deg) rotateZ(-30deg); }
 }
+
+
 
 @keyframes scatter-9 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(130px, 65px, 50px) rotateX(35deg) rotateY(45deg) rotateZ(60deg); }
 }
 
+
+
 @keyframes scatter-10 {
     0% { transform: translate3d(0, 0, 0) rotate(0); }
     100% { transform: translate3d(160px, -20px, 90px) rotateX(-55deg) rotateY(-25deg) rotateZ(-45deg); opacity: 0.9; }
 }
+
+
 
 /* =======================================================
    CURSOR FOLLOWER SETTINGS (toggle + ganti model gif)
@@ -2092,6 +1649,8 @@ body::before {
     right: 20px;
     z-index: 10001;
 }
+
+
 
 .cf-settings-btn {
     width: 38px;
@@ -2109,17 +1668,23 @@ body::before {
     font-size: 14px;
 }
 
+
+
 .cf-settings-btn:hover {
     border-color: var(--primary);
     color: var(--primary);
     transform: rotate(45deg);
 }
 
+
+
 .cf-settings.open .cf-settings-btn {
     border-color: var(--primary);
     color: var(--primary);
     transform: rotate(90deg);
 }
+
+
 
 .cf-settings-menu {
     position: absolute;
@@ -2147,11 +1712,15 @@ body::before {
     z-index: 999;
 }
 
+
+
 .cf-settings.open .cf-settings-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
 }
+
+
 
 /* Stagger fade-in tiap item pas menu dibuka */
 .cf-settings-menu > * {
@@ -2160,17 +1729,33 @@ body::before {
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(1) { transition-delay: 0.03s; }
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(2) { transition-delay: 0.06s; }
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(3) { transition-delay: 0.09s; }
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(4) { transition-delay: 0.12s; }
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(5) { transition-delay: 0.15s; }
+
+
 .cf-settings.open .cf-settings-menu > *:nth-child(6) { transition-delay: 0.18s; }
+
+
 
 .cf-settings.open .cf-settings-menu > * {
     opacity: 1;
     transform: translateY(0);
 }
+
+
 
 .cf-settings-item {
     display: flex;
@@ -2188,27 +1773,37 @@ body::before {
     transition: all 0.2s ease;
 }
 
+
+
 .cf-settings-item:hover,
 .cf-settings-item.active {
     background: rgba(255, 255, 255, 0.08);
     color: var(--text);
 }
 
+
+
 .cf-settings-item i {
     width: 14px;
     font-size: 12px;
 }
+
+
 
 .cf-check {
     margin-left: auto;
     color: var(--primary) !important;
 }
 
+
+
 .cf-settings-divider {
     height: 1px;
     background: rgba(255, 255, 255, 0.1);
     margin: 4px 0;
 }
+
+
 
 .cf-settings-title {
     font-size: 11px;
@@ -2218,6 +1813,8 @@ body::before {
     padding: 4px 10px 2px;
     opacity: 0.7;
 }
+
+
 
 /* =======================================================
    CHATBOT WIDGET (bottom-left, glassmorphism, smooth anim)
@@ -2231,6 +1828,8 @@ body::before {
     flex-direction: column;
     align-items: flex-start;
 }
+
+
 
 .chatbot-toggle-btn {
     position: relative;
@@ -2252,6 +1851,8 @@ body::before {
     order: 2;
 }
 
+
+
 .chatbot-toggle-btn::before {
     content: '';
     position: absolute;
@@ -2263,10 +1864,14 @@ body::before {
     pointer-events: none;
 }
 
+
+
 .chatbot-widget.open .chatbot-toggle-btn::before {
     animation: none;
     opacity: 0;
 }
+
+
 
 @keyframes chatbotPulseRing {
     0%   { transform: scale(0.9); opacity: 0.6; }
@@ -2274,10 +1879,14 @@ body::before {
     100% { transform: scale(1.35); opacity: 0; }
 }
 
+
+
 .chatbot-toggle-btn:hover {
     transform: scale(1.08) translateY(-2px);
     border-color: var(--primary);
 }
+
+
 
 .chatbot-toggle-btn .chatbot-icon-chat,
 .chatbot-toggle-btn .chatbot-icon-close {
@@ -2285,20 +1894,28 @@ body::before {
     transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+
+
 .chatbot-toggle-btn .chatbot-icon-close {
     opacity: 0;
     transform: rotate(-90deg) scale(0.5);
 }
+
+
 
 .chatbot-widget.open .chatbot-toggle-btn .chatbot-icon-chat {
     opacity: 0;
     transform: rotate(90deg) scale(0.5);
 }
 
+
+
 .chatbot-widget.open .chatbot-toggle-btn .chatbot-icon-close {
     opacity: 1;
     transform: rotate(0deg) scale(1);
 }
+
+
 
 .chatbot-panel {
     position: relative;
@@ -2326,11 +1943,15 @@ body::before {
                 visibility 0.32s;
 }
 
+
+
 .chatbot-widget.open .chatbot-panel {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
 }
+
+
 
 .chatbot-header {
     position: relative;
@@ -2345,6 +1966,8 @@ body::before {
     flex-shrink: 0;
 }
 
+
+
 .chatbot-avatar {
     width: 34px;
     height: 34px;
@@ -2358,6 +1981,8 @@ body::before {
     flex-shrink: 0;
 }
 
+
+
 .chatbot-header-info {
     display: flex;
     flex-direction: column;
@@ -2365,6 +1990,8 @@ body::before {
     flex: 1;
     min-width: 0;
 }
+
+
 
 .chatbot-header-info strong {
     font-size: 13.5px;
@@ -2374,6 +2001,8 @@ body::before {
     text-overflow: ellipsis;
 }
 
+
+
 .chatbot-status {
     font-size: 11px;
     color: var(--text-muted);
@@ -2381,6 +2010,8 @@ body::before {
     align-items: center;
     gap: 5px;
 }
+
+
 
 .chatbot-status-dot {
     width: 7px;
@@ -2391,14 +2022,20 @@ body::before {
     animation: chatbotStatusBlink 2s ease-in-out infinite;
 }
 
+
+
 @keyframes chatbotStatusBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
 }
 
+
+
 .chatbot-menu-wrap {
     flex-shrink: 0;
 }
+
+
 
 .chatbot-menu-btn {
     background: transparent;
@@ -2415,11 +2052,15 @@ body::before {
     transition: all 0.25s ease;
 }
 
+
+
 .chatbot-menu-btn:hover,
 .chatbot-menu-wrap.open .chatbot-menu-btn {
     background: rgba(255, 255, 255, 0.08);
     color: var(--text);
 }
+
+
 
 .chatbot-scrim {
     position: absolute;
@@ -2437,10 +2078,14 @@ body::before {
     border-radius: 0 0 20px 20px;
 }
 
+
+
 .chatbot-panel.menu-open .chatbot-scrim {
     opacity: 1;
     pointer-events: auto;
 }
+
+
 
 .chatbot-menu-dropdown {
     position: absolute;
@@ -2469,11 +2114,15 @@ body::before {
     z-index: 6;
 }
 
+
+
 .chatbot-menu-wrap.open .chatbot-menu-dropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
 }
+
+
 
 .chatbot-menu-item {
     display: flex;
@@ -2497,11 +2146,15 @@ body::before {
     -webkit-tap-highlight-color: transparent;
 }
 
+
+
 .chatbot-menu-item i {
     width: 13px;
     font-size: 11px;
     color: #000000 !important; 
 }
+
+
 
 /* Efek Hover pas kursor di atas menu */
 .chatbot-menu-item:hover {
@@ -2509,10 +2162,14 @@ body::before {
     color: #000000 !important;
 }
 
+
+
 .chatbot-menu-item i {
     width: 13px;
     font-size: 11px;
 }
+
+
 
 .chatbot-close {
     background: transparent;
@@ -2530,11 +2187,15 @@ body::before {
     flex-shrink: 0;
 }
 
+
+
 .chatbot-close:hover {
     background: rgba(255, 255, 255, 0.08);
     color: var(--text);
     transform: rotate(90deg);
 }
+
+
 
 .chatbot-body {
     flex: 1;
@@ -2547,11 +2208,15 @@ body::before {
     -ms-overflow-style: none;
 }
 
+
+
 .chatbot-body::-webkit-scrollbar {
     width: 0;
     height: 0;
     display: none;
 }
+
+
 
 .chatbot-history-item {
     padding: 6px 0;
@@ -2560,10 +2225,14 @@ body::before {
     color: var(--text-muted);
 }
 
+
+
 .chatbot-history-item:first-child {
     border-top: none;
     padding-top: 0;
 }
+
+
 
 .chatbot-msg {
     max-width: 82%;
@@ -2574,10 +2243,14 @@ body::before {
     animation: chatbotMsgIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+
+
 @keyframes chatbotMsgIn {
     from { opacity: 0; transform: translateY(8px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+
 
 .chatbot-msg.bot {
     align-self: flex-start;
@@ -2587,6 +2260,8 @@ body::before {
     border-bottom-left-radius: 4px;
 }
 
+
+
 .chatbot-msg.user {
     align-self: flex-end;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -2594,6 +2269,8 @@ body::before {
     border-bottom-right-radius: 4px;
     font-weight: 500;
 }
+
+
 
 .chatbot-typing {
     align-self: flex-start;
@@ -2607,6 +2284,8 @@ body::before {
     animation: chatbotMsgIn 0.3s ease both;
 }
 
+
+
 .chatbot-typing span {
     width: 6px;
     height: 6px;
@@ -2615,13 +2294,21 @@ body::before {
     animation: chatbotTypingBounce 1.2s ease-in-out infinite;
 }
 
+
+
 .chatbot-typing span:nth-child(2) { animation-delay: 0.15s; }
+
+
 .chatbot-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+
 
 @keyframes chatbotTypingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
     30% { transform: translateY(-4px); opacity: 1; }
 }
+
+
 
 .chatbot-link-row {
     display: flex;
@@ -2632,6 +2319,8 @@ body::before {
     margin-top: -4px;
     animation: chatbotMsgIn 0.3s ease both;
 }
+
+
 
 .chatbot-link-btn {
     display: inline-flex;
@@ -2648,14 +2337,20 @@ body::before {
     white-space: nowrap;
 }
 
+
+
 .chatbot-link-btn:hover {
     transform: translateY(-1px);
     filter: brightness(1.08);
 }
 
+
+
 .chatbot-link-btn i {
     font-size: 12px;
 }
+
+
 
 .chatbot-quick-replies {
     display: flex;
@@ -2664,6 +2359,8 @@ body::before {
     padding: 4px 14px 12px;
     flex-shrink: 0;
 }
+
+
 
 .chatbot-quick-btn {
     background: var(--glass-bg);
@@ -2677,11 +2374,15 @@ body::before {
     white-space: nowrap;
 }
 
+
+
 .chatbot-quick-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--primary);
     transform: translateY(-1px);
 }
+
+
 
 .chatbot-input-row {
     display: flex;
@@ -2695,6 +2396,8 @@ body::before {
     flex-shrink: 0;
 }
 
+
+
 .chatbot-input {
     flex: 1;
     background: rgba(255, 255, 255, 0.04);
@@ -2707,14 +2410,20 @@ body::before {
     transition: border-color 0.25s ease, background 0.25s ease;
 }
 
+
+
 .chatbot-input:focus {
     border-color: var(--primary);
     background: rgba(255, 255, 255, 0.07);
 }
 
+
+
 .chatbot-input::placeholder {
     color: var(--text-muted);
 }
+
+
 
 .chatbot-send-btn {
     width: 34px;
@@ -2732,15 +2441,21 @@ body::before {
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
 }
 
+
+
 .chatbot-send-btn:hover {
     transform: scale(1.1);
 }
+
+
 
 .chatbot-send-btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
 }
+
+
 
 @media (max-width: 480px) {
     .chatbot-widget {
@@ -2758,6 +2473,8 @@ body::before {
         font-size: 20px;
     }
 }
+
+
 
 /* Class pembantu untuk mengunci scroll body di awal */
 body.overflow-hidden {

@@ -1,0 +1,174 @@
+/* ==========================================================
+   PROJECTS.CSS — Showcase portfolio/proyek
+   ========================================================== */
+
+
+
+.projects {
+    padding: 100px 0;
+    background: transparent;
+}
+
+
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+
+
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+
+
+.project-card {
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+    /* Sebelumnya "transition: all" — itu bikin browser mantau SEMUA properti
+       (termasuk background, border-radius, dll) tiap kali parent-nya
+       (.project-card-link) di-fade sama reveal observer, padahal cuma
+       transform & box-shadow yang beneran butuh dianimasikan (pas hover).
+       Dipersempit biar ga ada kerjaan repaint nganggur pas kartu muncul. */
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    /* Isolasi area repaint blur-nya sendiri, biar animasi opacity di parent
+       ga nge-trigger repaint ke elemen lain di section proyek. */
+    contain: layout paint;
+}
+
+
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+
+.project-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(255, 255, 255, 0.2);
+}
+
+
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+
+
+.project-img {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+
+.project-card:hover .project-img {
+    transform: scale(1.1) rotate(1deg);
+}
+
+
+
+.project-info {
+    padding: 25px;
+    position: relative;
+}
+
+
+
+.project-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+
+
+.project-card:hover .project-info h3 {
+    color: var(--primary-dark);
+}
+
+
+
+.project-info p {
+    color: #7a8a9a;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+
+
+.project-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: var(--dark);
+    color: var(--primary-dark);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+
+
+.project-card:hover .project-tag {
+    background: var(--primary-dark);
+    color: var(--dark);
+}
+
+
+
+.view-project {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+
+.project-card:hover .view-project {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+
+@media (max-width: 768px) {
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
